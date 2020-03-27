@@ -18,7 +18,7 @@
 <meta property="og:description" content="使用AWS运行代码当本地机器的计算资源有限时，我们可以通过云计算服务获取更强大的计算资源来运行本书中的深度学习代码。本节将介绍如何在AWS（亚马逊的云计算服务）上申请实例并通过Jupyter笔记本运行代码。本节中的例子有如下两个步骤:    申请含一个K80 GPU的“p2.xlarge”实例。 安装CUDA及相应GPU版本的MXNet。  申请其他类型的实例或安装其他版本的MXNet的方法同本节">
 <meta property="og:image" content="http://yoursite.com/images/004.jpg">
 <meta property="article:published_time" content="2020-03-26T08:40:18.162Z">
-<meta property="article:modified_time" content="2020-03-27T01:54:31.682Z">
+<meta property="article:modified_time" content="2020-03-27T03:22:29.940Z">
 <meta property="article:author" content="Leo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/images/004.jpg">
@@ -139,7 +139,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 分钟 读完 (大约 2376 个字)
+                    3 分钟 读完 (大约 431 个字)
                 </span>
                 
                 
@@ -166,69 +166,6 @@
 <p><img src="/blog-cn/1f26b7b2/aws/ec2.png" alt="EC2面板。"></p>
 <p>图11.10的最上面一行显示了配置实例所需的7个步骤。在第一步“1. Chosse AMI”中，选择Ubuntu 16.04作为操作系统。</p>
 <p><img src="/blog-cn/1f26b7b2/aws/img/os.png" alt="选择操作系统。"></p>
-<p>EC2提供了大量不同配置的实例。如图11.11所示，在第二步“2. Chosse Instance Type”中，选择有一个K80 GPU的“p2.xlarge”实例。我们也可以选择像“p2.16xlarge”这样有多个GPU的实例。如果你想比较不同实例的机器配置和收费，可参考 <a href="https://www.ec2instances.info/">https://www.ec2instances.info/</a> 。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/p2x.png" alt="选择实例。"></p>
-<p>我们建议在选择实例前先在图11.9左栏“Limits”标签里检查下有无数量限制。如图11.12所示，该账号的限制是最多在一个区域开一个“p2.xlarge”实例。如果需要开更多实例，可以通过点击右边“Request limit increase”链接来申请更大的实例容量。这通常需要一个工作日来处理。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/limits.png" alt="实例的数量限制。"></p>
-<p>我们将保持第三步“3. Configure Instance”、第五步“5. Add Tags”和第六步“6. Configure Security Group”中的默认配置不变。点击第四步“4.Add Storage”，如图11.13所示，将默认的硬盘大小增大到40GB。注意，安装CUDA需要4GB左右空间。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/disk.png" alt="修改实例的硬盘大小。"></p>
-<p>最后，在第七步“7. Review”中点击“Launch”来启动配置好的实例。这时候会提示我们选择用来访问实例的密钥。如果没有的话，可以选择图11.14中第一个下拉菜单的“Create a new key pair”选项来生成秘钥。之后，我们通过该下拉菜单的“Choose an existing key pair”选项选择生成好的密钥。点击“Launch Instances”按钮启动创建好的实例。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/keypair.png" alt="选择密钥。"></p>
-<p>点击图11.15中的实例ID就可以查看该实例的状态了。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/launching.png" alt="点击实例ID。"></p>
-<p>如图11.16所示，当实例状态（Instance State）变绿后，右击实例并选择“Connect”，这时就可以看到访问该实例的方法了。例如在命令行输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i &quot;&#x2F;path&#x2F;to&#x2F;key.pem&quot; ubuntu@ec2-xx-xxx-xxx-xxx.y.compute.amazonaws.com</span><br></pre></td></tr></table></figure>
-
-<p>其中“/path/to/key.pem”是本地存放访问实例的密钥的路径。当命令行提示“Are you sure you want to continue connecting (yes/no)”时，键入“yes”并按回车键即可登录创建好的实例。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/connect.png" alt="查看访问开启实例的方法。"></p>
-<h2 id="安装CUDA"><a href="#安装CUDA" class="headerlink" title="安装CUDA"></a>安装CUDA</h2><p>如果你登录的是一个GPU实例，需要下载并安装CUDA。首先，更新并安装编译需要的包：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y build-essential git libgfortran3</span><br></pre></td></tr></table></figure>
-
-<p>Nvidia一般每年会更新一次CUDA大版本。这里我们下载作者写本书时的最新版本CUDA 9.1。访问Nvidia官网（<a href="https://developer.nvidia.com/cuda-91-download-archive">https://developer.nvidia.com/cuda-91-download-archive</a> ）获取正确 版本的CUDA 9.1的下载地址，如图11.17所示。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/cuda.png" alt="获取CUDA9.1的下载地址。"></p>
-<p>获取下载地址后，我们将下载并安装CUDA9.1，例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;developer.download.nvidia.com&#x2F;compute&#x2F;cuda&#x2F;9.1&#x2F;secure&#x2F;Prod&#x2F;local_installers&#x2F;cuda_9.1.85_387.26_linux.run</span><br><span class="line">sudo sh cuda_9.1.85_387.26_linux.run</span><br></pre></td></tr></table></figure>
-
-<p>点击“Ctrl+C”跳出文档浏览，并回答以下几个问题。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">accept&#x2F;decline&#x2F;quit: accept</span><br><span class="line">Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 387.26?</span><br><span class="line">(y)es&#x2F;(n)o&#x2F;(q)uit: y</span><br><span class="line">Do you want to install the OpenGL libraries?</span><br><span class="line">(y)es&#x2F;(n)o&#x2F;(q)uit [ default is yes ]: y</span><br><span class="line">Do you want to run nvidia-xconfig?</span><br><span class="line">(y)es&#x2F;(n)o&#x2F;(q)uit [ default is no ]: n</span><br><span class="line">Install the CUDA 9.1 Toolkit?</span><br><span class="line">(y)es&#x2F;(n)o&#x2F;(q)uit: y</span><br><span class="line">Enter Toolkit Location</span><br><span class="line"> [ default is &#x2F;usr&#x2F;local&#x2F;cuda-9.1 ]:</span><br><span class="line">Do you want to install a symbolic link at &#x2F;usr&#x2F;local&#x2F;cuda?</span><br><span class="line">(y)es&#x2F;(n)o&#x2F;(q)uit: y</span><br><span class="line">Install the CUDA 9.1 Samples?</span><br><span class="line">(y)es&#x2F;(n)o&#x2F;(q)uit: n</span><br></pre></td></tr></table></figure>
-
-<p>当安装完成后，运行下面的命令就可以看到该实例的GPU了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
-
-<p>最后，将CUDA加入到库的路径中，以方便其他库找到它。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;export LD_LIBRARY_PATH&#x3D;\$&#123;LD_LIBRARY_PATH&#125;:&#x2F;usr&#x2F;local&#x2F;cuda-9.1&#x2F;lib64&quot; &gt;&gt; .bashrc</span><br></pre></td></tr></table></figure>
-
-<h2 id="获取本书代码并安装GPU版的MXNet"><a href="#获取本书代码并安装GPU版的MXNet" class="headerlink" title="获取本书代码并安装GPU版的MXNet"></a>获取本书代码并安装GPU版的MXNet</h2><p>我们已在<a href="../chapter_prerequisite/install.md">“获取和运行本书代码”</a>一节中介绍了Linux用户获取本书代码并安装运行环境的方法。首先，安装Linux版的Miniconda（网址：<a href="https://conda.io/miniconda.html">https://conda.io/miniconda.html</a> ），例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;repo.continuum.io&#x2F;miniconda&#x2F;Miniconda3-latest-Linux-x86_64.sh</span><br><span class="line">bash Miniconda3-latest-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
-
-<p>这时需要回答下面几个问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Do you accept the license terms? [yes|no]</span><br><span class="line">[no] &gt;&gt;&gt; yes</span><br><span class="line">Do you wish the installer to prepend the Miniconda3 install location</span><br><span class="line">to PATH in your &#x2F;home&#x2F;ubuntu&#x2F;.bashrc ? [yes|no]</span><br><span class="line">[no] &gt;&gt;&gt; yes</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后，运行一次<code>source ~/.bashrc</code>让CUDA和conda生效。接下来，下载本书代码、安装并激活conda环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir gluon_tutorials_zh &amp;&amp; cd gluon_tutorials_zh</span><br><span class="line">curl https:&#x2F;&#x2F;zh.gluon.ai&#x2F;gluon_tutorials_zh.tar.gz -o tutorials.tar.gz</span><br><span class="line">tar -xzvf tutorials.tar.gz &amp;&amp; rm tutorials.tar.gz</span><br><span class="line">conda env create -f environment.yml</span><br><span class="line">source activate gluon</span><br></pre></td></tr></table></figure>
-
-<p>默认环境里安装了CPU版本的MXNet。现在我们将它替换成GPU版本的MXNet。因为CUDA的版本是9.1，所以安装<code>mxnet-cu91</code>。一般来说，如果CUDA版本是x.y，那么相应安装<code>mxnet-cuxy</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall mxnet</span><br><span class="line">pip install mxnet-cu91</span><br></pre></td></tr></table></figure>
-
-<h2 id="运行Jupyter笔记本"><a href="#运行Jupyter笔记本" class="headerlink" title="运行Jupyter笔记本"></a>运行Jupyter笔记本</h2><p>现在，我们可以运行Jupyter笔记本了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure>
-
-<p>图11.18显示了运行后可能的输出，其中最后一行为8888端口下的URL。</p>
-<p><img src="/blog-cn/1f26b7b2/aws/img/jupyter.png" alt="运行Jupyter笔记本后的输出，其中最后一行为8888端口下的URL。"></p>
-<p>由于创建的实例并没有暴露8888端口，我们可以在本地命令行启动ssh从实例映射到本地8889端口。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 该命令须在本地命令行运行。</span><br><span class="line">ssh -i &quot;&#x2F;path&#x2F;to&#x2F;key.pem&quot; ubuntu@ec2-xx-xxx-xxx-xxx.y.compute.amazonaws.com -L 8889:localhost:8888</span><br></pre></td></tr></table></figure>
-
-<p>最后，把图11.18中运行Jupyter笔记本后输出的最后一行URL复制到本地浏览器，并将8888改为8889。点击回车键即可从本地浏览器通过Jupyter笔记本运行实例上的代码。</p>
-<h2 id="关闭不使用的实例"><a href="#关闭不使用的实例" class="headerlink" title="关闭不使用的实例"></a>关闭不使用的实例</h2><p>因为云服务按使用时长计费，我们通常会在不使用实例时将其关闭。</p>
-<p>如果较短时间内还将重新开启实例，右击图11.16中的示例，选择“Instance State” $\rightarrow$ “Stop”将实例停止，等下次使用时选择“Instance State” $\rightarrow$ “Start”重新开启实例。这种情况下，开启的实例将保留其停止前硬盘上的存储（例如无需再安装CUDA和其他运行环境）。然而，停止状态的实例也会因其所保留的硬盘空间而产生少量计费。</p>
-<p>如果较长时间内不会重新开启实例，右击图11.16中的示例，选择“Image” $\rightarrow$ “Create”创建镜像。然后，选择“Instance State” $\rightarrow$ “Terminate”将实例终结（硬盘不再产生计费）。当下次使用时，我们可按本节中创建并运行EC2实例的步骤重新创建一个基于保存镜像的实例。唯一的区别在于，在图11.10的第一步“1. Chosse AMI”中，我们需要通过左栏“My AMIs”选择之前保存的镜像。这样创建的实例将保留镜像上硬盘的存储，例如无需再安装CUDA和其他运行环境。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
-<li>我们可以通过云计算服务获取更强大的计算资源来运行本书中的深度学习代码。</li>
-</ul>
-<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ul>
-<li>云很方便，但不便宜。研究下它的价格，和看看如何节省开销。</li>
-</ul>
-<h2 id="扫码直达讨论区"><a href="#扫码直达讨论区" class="headerlink" title="扫码直达讨论区"></a>扫码直达<a href="https://discuss.gluon.ai/t/topic/6154">讨论区</a></h2><p><img src="/blog-cn/1f26b7b2/aws/img/qr_aws.svg" alt></p>
 
         </div>
         
@@ -275,7 +212,7 @@
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/secret/d9bfec68/secret-blog/">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog-cn/d9bfec68/secret-blog/">
                 <span class="level-item">secret blog</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
@@ -472,7 +409,7 @@
         
         <article class="media">
             
-            <a href="/secret/d9bfec68/secret-blog/" class="media-left">
+            <a href="/blog-cn/d9bfec68/secret-blog/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/003.jpg" alt="secret blog">
                 </p>
@@ -481,7 +418,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-25T08:11:04.000Z">2020-03-25</time></div>
-                    <a href="/secret/d9bfec68/secret-blog/" class="title has-link-black-ter is-size-6 has-text-weight-normal">secret blog</a>
+                    <a href="/blog-cn/d9bfec68/secret-blog/" class="title has-link-black-ter is-size-6 has-text-weight-normal">secret blog</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -584,7 +521,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Encrypted/">
                         <span class="tag">Encrypted</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -631,7 +568,7 @@
         
         <article class="media">
             
-            <a href="/secret/d9bfec68/secret-blog/" class="media-left">
+            <a href="/blog-cn/d9bfec68/secret-blog/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/003.jpg" alt="secret blog">
                 </p>
@@ -640,7 +577,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-25T08:11:04.000Z">2020-03-25</time></div>
-                    <a href="/secret/d9bfec68/secret-blog/" class="title has-link-black-ter is-size-6 has-text-weight-normal">secret blog</a>
+                    <a href="/blog-cn/d9bfec68/secret-blog/" class="title has-link-black-ter is-size-6 has-text-weight-normal">secret blog</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -743,7 +680,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Encrypted/">
                         <span class="tag">Encrypted</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
