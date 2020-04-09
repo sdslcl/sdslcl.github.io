@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>11-Matlab-Simulink代码生成01 - DIYECU</title>
+
+
+    <meta name="description" content="把手教你代码生成（上）：MATLAB代码生成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11-Matlab-Simulink代码生成01">
+<meta property="og:url" content="http://yoursite.com/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/">
+<meta property="og:site_name" content="DIYECU">
+<meta property="og:description" content="把手教你代码生成（上）：MATLAB代码生成">
+<meta property="og:image" content="http://yoursite.com/images/blog-003.jpeg">
+<meta property="article:published_time" content="2020-04-09T01:05:31.982Z">
+<meta property="article:modified_time" content="2020-04-09T01:05:32.702Z">
+<meta property="article:author" content="Leo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/blog-003.jpeg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/southeast.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/og_image.png" alt="11-Matlab-Simulink代码生成01" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/images/blog-003.jpeg" alt="11-Matlab-Simulink代码生成01">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:31.982Z">2020-04-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1332 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                11-Matlab-Simulink代码生成01
+            
+        </h1>
+        <div class="content">
+            <h1 id="把手教你代码生成（上）：MATLAB代码生成"><a href="#把手教你代码生成（上）：MATLAB代码生成" class="headerlink" title="把手教你代码生成（上）：MATLAB代码生成"></a>把手教你代码生成（上）：MATLAB代码生成</h1><a id="more"></a>
+<p>==============</p>
+<p>本文主要参照书《SIMULINK仿真与代码生成技术入门到精通》</p>
+<p>MATLAB®Coder™从MATLAB代码生成可读和可移植的C和C ++代码。<br>它支持大多数MATLAB语言和广泛的工具箱。可以将生成的代码集成到项目中作为源代码，静态库或动态库。还可以使用MATLAB环境中生成的代码，以加快MATLAB代码计算密集型部分。</p>
+<p>命令窗口输入“coder”，会弹出图1界面：</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/06be5f059d1d5ce87bc5f5d859225cb6.jpg" alt></p>
+<p>图1 Coder界面</p>
+<p>点击图1中红色方框可以加载.M文件，但是只能加载函数类文件，即文件中要有明确的输入输出，若一个文件中包含另一个文件，则要将其文档也一起加载。</p>
+<p>加载完毕后点击右下角的 “NEXT”,进行下一步操作。</p>
+<p>若在给出方程的一种引用方式，如图2中的Quater_to_Euler([1;0;0;0])，之后点击 “<br>Autodefine Input Types”,则系统可自动定义其为4*1的double矩阵。</p>
+<p>同样也可以手动定义。点击图3中的红色方框，可以设置函数输入变量的类型。变量类型满足C语言的全部要求，也可以设置为矩阵形式，可以设置为结构体，结构体声明中可以直接输入结构体名字及变量名字。具体信息可详见蓝色的“learn<br>more”。定义前最好知道函数输入的维数，若定义为不定维数的矩阵，影响其执行效率，增多代码数量。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/89fc9e63c459ea07548053a649c8326e.jpg" alt></p>
+<p>图2 自动定义输入类型</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/576cc22501b771bef8225f299df05463.jpg" alt></p>
+<p>图3 手动定义输入类型</p>
+<p>设计输出后点击右下角的“NEXT”,进行下一步操作。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/b8a4867cf9da8dfddb26ca2f8e7e450c.jpg" alt></p>
+<p>图4 程序检测界面</p>
+<p>本步为源程序检测，给出函数的数值输入就可以在对话框显示出具体结果，点击图4中的“<br>Check For<br>Issues”可以检测程序是否有错误不可以生成C文件，若有错误则根据提示进行修改。若无错误则会弹出图5的界面。界面下方弹出的是计算结果，程序界面显示的为调用次数。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/1df17508bdef4a8aa38088c1b83141d3.jpg" alt></p>
+<p>图5 程序检测执行界面</p>
+<p>M语言转化成C语言要在使用前声明变量，在上图中已经将pitch等变量声明为结构体形式，若按照M语言的矩阵声明格式，则会报错（如图6），若先将矩阵定义为m*n的零矩阵，则可避免错误</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/2421a6150ce9a8170309b902c3514641.jpg" alt></p>
+<p>图6错误声明矩阵的形式</p>
+<p>设计输出后点击右下角的“NEXT”,进行下一步操作</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/ffa1638f305fad33c7fe8d972d977eaf.jpg" alt></p>
+<p>图6 代码生成设置</p>
+<p>点击其中的”Build type“，其中有以下几种类型可选，通常我们 选择第一项。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/e8ddb7108cd8cc50b37c976b62959337.jpg" alt></p>
+<p>图7 build type</p>
+<p>其中的”Hardware Board“选项点击后可根据实际硬件需求来选择。举例如图8：</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/d6c4dbb90287c229e3d28768c2d78b23.jpg" alt></p>
+<p>图8 硬件选择</p>
+<p>点击图中的”more settings“，可进入代码生成选项窗口。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/1056d84d48fa4ef3dfac9c574b7ff23b.jpg" alt></p>
+<p>图9 代码生成窗口</p>
+<p>选项”Paths“是选择代码生成的位置</p>
+<p>如图10中，第二选项”Speed”则包含数据溢出等保护函数，建议不勾选。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/83daa8a1546ba638587990c1fedcbb53.jpg" alt></p>
+<p>图10 Speed</p>
+<p>图11中，<br>其中”Memory“选项与处理器的能力相关，其中第一个选项框与不定长的数组有关，嵌入式开发最好不选，第二个选项则与处理器的堆栈有关，要根据处理器的堆栈大小来设置。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/37fbc3cdb710defd63e60fb7b2fd5acd.jpg" alt></p>
+<p>图11 Memory</p>
+<p>图12中，选项“Code<br>Appearance”与代码生成的风格有关，其中的“comments”部分建议勾选”MATLAB source code<br>as comments“，方便代码的可读性。其他保持默认设置。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/cb3727a63a58d52867e346e20ae14731.jpg" alt></p>
+<p>图12 Code appearance</p>
+<p>图13中，在”Custom Code“的设置中，“Standard math library”<br>其中的选择C89/C90，在“Code replace library”中可以选择ARM<br>Cortex-M3，实际上我们用的STM32F7系列的内核已经为ARM<br>Cortex-M7，但是并没有此选项。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/0e49c74f10d8e4623dbe99ca65a55350.jpg" alt></p>
+<p>图13 硬件选择</p>
+<p>最后设置完成后，点击“GENERATE”，无错误成功后为如下界面，其中的主函数为测试函数，并不执行具体的计算，其中的<br>initialize 函数为参数初始化函数，为空函数，可以自行添加相关初始化程序。</p>
+<p><img src="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/ff67c38af479805898407220936c3192.jpg" alt></p>
+<p>图14 代码生成成功后预览图</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ialipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/iweixin.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog-cn/181b6a48/13-%E9%AB%98%E6%95%88%E4%BD%BF%E7%94%A8simulink/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">13-高效使用simulink</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog-cn/e11de62f/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/">
+                <span class="level-item">11-Matlab-Simulink代码生成</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'UNAzhXrv3JomW84YwQoP0rPM-gzGzoHsz',
+        app_key: 'p4TeNM70w95O5YbrAsz381v7',
+        placeholder: 'Say something...'
+    });
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="/images/avatar.png" alt="DIYECU BLOG">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        DIYECU BLOG
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        何时再遇见
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>银河系外太空</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            24
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            1
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            1
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://gitasd.com/sdslc" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://giuadt.com/ppoffice" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">PPOffice</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">giuadt.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Simulink/">
+            <span class="level-start">
+                <span class="level-item">Simulink</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Encrypted/" style="font-size: 10px;">Encrypted</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-014.jpeg" alt="43-如何解锁已经锁定的simulink模块">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.078Z">2020-04-08</time></div>
+                    <a href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/" class="title has-link-black-ter is-size-6 has-text-weight-normal">43-如何解锁已经锁定的simulink模块</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-013.jpeg" alt="36-获取参数名称和值命令get-param使用方法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.066Z">2020-04-08</time></div>
+                    <a href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="title has-link-black-ter is-size-6 has-text-weight-normal">36-获取参数名称和值命令get-param使用方法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-012.jpeg" alt="28-从模型创建工程">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.058Z">2020-04-08</time></div>
+                    <a href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" class="title has-link-black-ter is-size-6 has-text-weight-normal">28-从模型创建工程</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-011.jpeg" alt="23-m脚本文件保护">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.050Z">2020-04-08</time></div>
+                    <a href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">23-m脚本文件保护</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-009.jpeg" alt="19-改善Simulink模型布局">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.042Z">2020-04-08</time></div>
+                    <a href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/" class="title has-link-black-ter is-size-6 has-text-weight-normal">19-改善Simulink模型布局</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">15</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Encrypted/">
+                        <span class="tag">Encrypted</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-014.jpeg" alt="43-如何解锁已经锁定的simulink模块">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.078Z">2020-04-08</time></div>
+                    <a href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/" class="title has-link-black-ter is-size-6 has-text-weight-normal">43-如何解锁已经锁定的simulink模块</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-013.jpeg" alt="36-获取参数名称和值命令get-param使用方法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.066Z">2020-04-08</time></div>
+                    <a href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="title has-link-black-ter is-size-6 has-text-weight-normal">36-获取参数名称和值命令get-param使用方法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-012.jpeg" alt="28-从模型创建工程">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.058Z">2020-04-08</time></div>
+                    <a href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" class="title has-link-black-ter is-size-6 has-text-weight-normal">28-从模型创建工程</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-011.jpeg" alt="23-m脚本文件保护">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.050Z">2020-04-08</time></div>
+                    <a href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/" class="title has-link-black-ter is-size-6 has-text-weight-normal">23-m脚本文件保护</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-009.jpeg" alt="19-改善Simulink模型布局">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-09T01:05:32.042Z">2020-04-08</time></div>
+                    <a href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/" class="title has-link-black-ter is-size-6 has-text-weight-normal">19-改善Simulink模型布局</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">15</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Encrypted/">
+                        <span class="tag">Encrypted</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/og_image.png" alt="11-Matlab-Simulink代码生成01" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Leo&nbsp;
+                Powered &#10084; DIYECU
+                </p>
+            </div>
+            
+            <script>
+                (function(){
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    }
+                    else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>      
+            
+            <div align="center">
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <script>
+                    var now = new Date(); 
+                    function createtime() { 
+                        var grt= new Date("12/17/2019 12:49:00");//此处修改你的建站时间或者网站上线时间 
+                        now.setTime(now.getTime()+250); 
+                        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+                        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+                    } 
+                    setInterval("createtime()",250);
+                </script>
+                <div align="center">
+                <span id="busuanzi_container_site_pv" class="theme-info">本站总访问量- 
+                    <span id="busuanzi_value_site_pv"></span> -次
+                </span>
+                <span id="busuanzi_container_site_uv" class="theme-info">您是第- 
+                    <span id="busuanzi_value_site_uv">
+                    </span> -位小伙伴
+                </span>
+                <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            </div>
+            </div>
+            
+            <span>
+            </span>
+            
+
+            <script>
+                (function(){
+                    var bp = document.createElement('script');
+                    bp.src = '//push.zhanzhang.baidu.com/push.js';
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<!--�仨����Ч-->
+    <script src="https://cdn.jsdelivr.net/gh/wallleap/cdn@latest/js/sakura.js00"></script>
+    
+    <!--�����Ч��-->
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":0.5,"opacityOnHover":0.2}});</script></body>
+</html>
