@@ -888,7 +888,7 @@
                 <script>
                     var now = new Date(); 
                     function createtime() { 
-                        var grt= new Date("12/17/2019 12:49:00");//此处修改你的建站时间或者网站上线时间 
+                        var grt= new Date("11/10/2019 12:49:00");//此处修改你的建站时间或者网站上线时间 
                         now.setTime(now.getTime()+250); 
                         days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
                         hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
@@ -906,7 +906,7 @@
                     <span id="busuanzi_value_site_pv"></span> -次
                 </span>
                 <span id="busuanzi_container_site_uv" class="theme-info">您是第- 
-                    <span id="busuanzi_value_site_uv">
+                    <span id="busuanzi_value_site_uv" + 2000>
                     </span> -位小伙伴
                 </span>
                 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -929,6 +929,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
 </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("zh-CN");</script>
