@@ -7,20 +7,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>关于 - DIYECU</title>
+<title>PCB布线基本规范 - DIYECU</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://yoursite.com/about/">
+    <meta name="description" content="PCB板布局布线的基本规范 PCB又被称为印刷电路板(Printed CircuitBoard)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PCB布线基本规范">
+<meta property="og:url" content="http://yoursite.com/blog-cn/a1fc874f/PCB%E5%B8%83%E7%BA%BF%E5%9F%BA%E6%9C%AC%E8%A7%84%E8%8C%83/">
 <meta property="og:site_name" content="DIYECU">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/images/og_image.png">
-<meta property="article:published_time" content="2020-03-26T14:28:38.000Z">
-<meta property="article:modified_time" content="2020-03-25T23:32:20.396Z">
+<meta property="og:description" content="PCB板布局布线的基本规范 PCB又被称为印刷电路板(Printed CircuitBoard)">
+<meta property="og:image" content="http://yoursite.com/images/blog-027.jpg">
+<meta property="article:published_time" content="2020-07-21T05:55:48.886Z">
+<meta property="article:modified_time" content="2020-07-21T05:55:48.894Z">
 <meta property="article:author" content="Leo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+<meta name="twitter:image" content="http://yoursite.com/images/blog-027.jpg">
 
 
 
@@ -78,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="关于" height="28">
+                <img src="/images/og_image.png" alt="PCB布线基本规范" height="28">
             
             </a>
         </div>
@@ -98,7 +99,7 @@
                 <a class="navbar-item"
                 href="/tags">标签</a>
                 
-                <a class="navbar-item is-active"
+                <a class="navbar-item"
                 href="/about">关于</a>
                 
             </div>
@@ -122,17 +123,27 @@
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/images/blog-027.jpg" alt="PCB布线基本规范">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-26T14:28:38.000Z">2020-03-26</time>
+                <time class="level-item has-text-grey" datetime="2020-07-21T05:55:48.886Z">2020-07-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    几秒 读完 (大约 0 个字)
+                    28 分钟 读完 (大约 4169 个字)
                 </span>
                 
                 
@@ -141,12 +152,116 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                关于
+                PCB布线基本规范
             
         </h1>
         <div class="content">
-            
+            <p>PCB板布局布线的基本规范</p>
+<p>PCB又被称为印刷电路板(Printed Circuit<br>Board)</p>
+<a id="more"></a>
+<p>，它可以实现电子元器件间的线路连接和功能实现，也是电源电路设计中重要的组成部分。今天就将以本文来介绍PCB板布局布线的基本规则。</p>
+<p><img src="/blog-cn/a1fc874f/PCB%E5%B8%83%E7%BA%BF%E5%9F%BA%E6%9C%AC%E8%A7%84%E8%8C%83/image1.png" alt></p>
+<h1 id="一、元件布局基本规则"><a href="#一、元件布局基本规则" class="headerlink" title="一、元件布局基本规则"></a>一、元件布局基本规则</h1><ol>
+<li>按电路模块进行布局，实现同一功能的相关电路称为一个模块，电路模块中的元件应采用就近集中原则，同时数字电路和模拟电路分开;</li>
+</ol>
+<p>2.定位孔、标准孔等非安装孔周围1.27mm 内不得贴装元、器件，螺钉等安装孔周围3.5mm(对于M2.5)、4mm(对于M3)内不得贴装元器件;</p>
+<ol start="3">
+<li><p>卧装电阻、电感(插件)、电解电容等元件的下方避免布过孔，以免波峰焊后过孔与元件壳体短路;</p>
+</li>
+<li><p>元器件的外侧距板边的距离为5mm;</p>
+</li>
+<li><p>贴装元件焊盘的外侧与相邻插装元件的外侧距离大于2mm;</p>
+</li>
+</ol>
+<p>6.<br>金属壳体元器件和金属件(屏蔽盒等)不能与其它元器件相碰，不能紧贴印制线、焊盘，其间距应大于2mm。定位孔、紧固件安装孔、椭圆孔及板中其它方孔外侧距板边的尺寸大于3mm;</p>
+<ol start="7">
+<li>发热元件不能紧邻导线和热敏元件;高热器件要均衡分布;</li>
+</ol>
+<p>8.<br>电源插座要尽量布置在印制板的四周，电源插座与其相连的汇流条接线端应布置在同侧。特别应注意不要把电源插座及其它焊接连接器布置在连接器之间，以利于这些插座、连接器的焊接及电源线缆设计和扎线。电源插座及焊接连接器的布置间距应考虑方便电源插头的插拔;</p>
+<p>9.<br>其它元器件的布置：所有IC元件单边对齐，有极性元件极性标示明确，同一印制板上极性标示不得多于两个方向，出现两个方向时，两个方向互相垂直;</p>
+<p>10、板面布线应疏密得当，当疏密差别太大时应以网状铜箔填充，网格大于8mil(或0.2mm);</p>
+<p>11、贴片焊盘上不能有通孔，以免焊膏流失造成元件虚焊。重要信号线不准从插座脚间穿过;</p>
+<p>12、贴片单边对齐，字符方向一致，封装方向一致;</p>
+<p>13、有极性的器件在以同一板上的极性标示方向尽量保持一致。</p>
+<h1 id="二、元件布线规则"><a href="#二、元件布线规则" class="headerlink" title="二、元件布线规则"></a>二、元件布线规则</h1><p>1、画定布线区域距PCB板边≤1mm的区域内，以及安装孔周围1mm内，禁止布线;</p>
+<p>2、电源线尽可能的宽，不应低于18mil;信号线宽不应低于12mil;cpu入出线不应低于10mil(或8mil);线间距不低于10mil;</p>
+<p>3、正常过孔不低于30mil;</p>
+<p>4、双列直插：焊盘60mil，孔径40mil;1/4W电阻：51*55mil(0805表贴);直插时焊盘62mil，孔径42mil;无极电容：51*55mil(0805表贴);直插时焊盘50mil，孔径28mil;</p>
+<p>5、注意电源线与地线应尽可能呈放射状，以及信号线不能出现回环走线。</p>
+<p>　</p>
+<p>如何提高抗干扰能力和电磁兼容性?</p>
+<p>在研制带处理器的电子产品时，如何提高抗干扰能力和电磁兼容性?</p>
+<h3 id="01"><a href="#01" class="headerlink" title="01"></a>01</h3><p><strong>下面的一些系统要特别注意抗电磁干扰</strong>：</p>
+<p>(1) 微控制器时钟频率特别高，总线周期特别快的系统。</p>
+<p>(2) 系统含有大功率，大电流驱动电路，如产生火花的继电器，大电流开关等。</p>
+<p>(3) 含微弱模拟信号电路以及高精度A/D变换电路的系统。</p>
+<h1 id="02"><a href="#02" class="headerlink" title="02"></a>02</h1><p>为增加系统的抗电磁干扰能力采取如下措施：</p>
+<p>(1) <strong>选用频率低的微控制器</strong>：</p>
+<p>选用外时钟频率低的微控制器可以有效降低噪声和提高系统的抗干扰能力。同样频率的方波和正弦波，方波中的高频成份比正弦波多得多。虽然方波的高频成份的波的幅度，比基波小，但频率越高越容易发射出成为噪声源，微控制器产生的最有影响的高频噪声大约是时钟频率的3倍。</p>
+<p>(2) <strong>减小信号传输中的畸变</strong></p>
+<p>微控制器主要采用高速CMOS技术制造。信号输入端静态输入电流在1mA左右，输入电容10PF左右，输入阻抗相当高，高速CMOS电路的输出端都有相当的带载能力，即相当大的输出值，将一个门的输出端通过一段很长线引到输入阻抗相当高的输入端，反射问题就很严重，它会引起信号畸变，增加系统噪声。当Tpd&gt;&gt;Tr时，就成了一个传输线问题，必须考虑信号反射，阻抗匹配等问题。</p>
+<p>信号在印制板上的延迟时间与引线的特性阻抗有关，即与印制线路板材料的介电常数有关。可以粗略地认为，信号在印制板引线的传输速度，约为光速的1/3到1/2之间。微控制器构成的系统中常用逻辑电话元件的Tr(标准延迟时间)为3到18ns之间。</p>
+<p>在印制线路板上，信号通过一个7W的电阻和一段25cm长的引线，线上延迟时间大致在4~20ns之间。也就是说，信号在印刷线路上的引线越短越好，最长不宜超过25cm。而且过孔数目也应尽量少，最好不多于2个。</p>
+<p>当信号的上升时间快于信号延迟时间，就要按照快电子学处理。此时要考虑传输线的阻抗匹配，对于一块印刷线路板上的集成块之间的信号传输，要避免出现Td&gt;&gt;Trd的情况，印刷线路板越大系统的速度就越不能太快。</p>
+<p>用以下结论归纳印刷线路板设计的一个规则：</p>
+<p><strong>信号在印刷板上传输，其延迟时间不应大于所用器件的标称延迟时间</strong>。</p>
+<p>(3) <strong>减小信号线间的交互干扰</strong>：</p>
+<p>A点一个上升时间为Tr的阶跃信号通过引线AB传向B端。信号在AB线上的延迟时间是Td。在D点，由于A点信号的向前传输，到达B点后的信号反射和AB线的延迟，Td时间以后会感应出一个宽度为Tr的页脉冲信号。在C点，由于AB上信号的传输与反射，会感应出一个宽度为信号在AB线上的延迟时间的两倍，即2Td的正脉冲信号。这就是信号间的交互干扰。干扰信号的强度与C点信号的di/at有关，与线间距离有关。当两信号线不是很长时，AB上看到的实际是两个脉冲的迭加。</p>
+<p>CMOS工艺制造的微控制由输入阻抗高，噪声高，噪声容限也很高，数字电路是迭加100~200mv噪声并不影响其工作。若图中AB线是一模拟信号，这种干扰就变为不能容忍。如印刷线路板为四层板，其中有一层是大面积的地，或双面板，信号线的反面是大面积的地时，这种信号间的交*干扰就会变小。原因是，大面积的地减小了信号线的特性阻抗，信号在D端的反射大为减小。特性阻抗与信号线到地间的介质的介电常数的平方成反比，与介质厚度的自然对数成正比。若AB线为一模拟信号，要避免数字电路信号线CD对AB的干扰，AB线下方要有大面积的地，AB线到CD线的距离要大于AB线与地距离的2~3倍。可用局部屏蔽地，在有引结的一面引线左右两侧布以地线。</p>
+<p>(4) <strong>减小来自电源的噪声</strong></p>
+<p>电源在向系统提供能源的同时，也将其噪声加到所供电的电源上。电路中微控制器的复位线，中断线，以及其它一些控制线最容易受外界噪声的干扰。电网上的强干扰通过电源进入电路，即使电池供电的系统，电池本身也有高频噪声。模拟电路中的模拟信号更经受不住来自电源的干扰。</p>
+<p>(5) <strong>注意印刷线板与元器件的高频特性</strong></p>
+<p>在高频情况下，印刷线路板上的引线，过孔，电阻、电容、接插件的分布电感与电容等不可忽略。电容的分布电感不可忽略，电感的分布电容不可忽略。电阻产生对高频信号的反射，引线的分布电容会起作用，当长度大于噪声频率相应波长的1/20时，就产生天线效应，噪声通过引线向外发射。</p>
+<p>印刷线路板的过孔大约引起0.6pf的电容。</p>
+<p>一个集成电路本身的封装材料引入2~6pf电容。</p>
+<p>一个线路板上的接插件，有520nH的分布电感。一个双列直扦的24引脚集成电路扦座，引入4~18nH的分布电感。</p>
+<p>这些小的分布参数对于这行较低频率下的微控制器系统中是可以忽略不计的;而<strong>对于高速系统必须予以特别注意</strong>。</p>
+<p>(6) <strong>元件布置要合理分区</strong></p>
+<p>元件在印刷线路板上排列的位置要充分考虑抗电磁干扰问题，原则之一是各部件之间的引线要尽量短。在布局上，要把模拟信号部分，高速数字电路部分，噪声源部分(如继电器，大电流开关等)这三部分合理地分开，使相互间的信号耦合为最小。</p>
+<p>G 处理好接地线</p>
+<p>印刷电路板上，电源线和地线最重要。克服电磁干扰，最主要的手段就是接地。</p>
+<p>对于双面板，地线布置特别讲究，通过采用单点接地法，电源和地是从电源的两端接到印刷线路板上来的，电源一个接点，地一个接点。印刷线路板上，要有多个返回地线，这些都会聚到回电源的那个接点上，就是所谓单点接地。所谓模拟地、数字地、大功率器件地开分，是指布线分开，而最后都汇集到这个接地点上来。与印刷线路板以外的信号相连时，通常采用屏蔽电缆。对于高频和数字信号，屏蔽电缆两端都接地。低频模拟信号用的屏蔽电缆，一端接地为好。</p>
+<p>对噪声和干扰非常敏感的电路或高频噪声特别严重的电路应该用金属罩屏蔽起来。</p>
+<p>(7) <strong>用好去耦电容</strong>。</p>
+<p>好的高频去耦电容可以去除高到1GHZ的高频成份。陶瓷片电容或多层陶瓷电容的高频特性较好。设计印刷线路板时，每个集成电路的电源，地之间都要加一个去耦电容。去耦电容有两个作用：一方面是本集成电路的蓄能电容，提供和吸收该集成电路开门关门瞬间的充放电能;另一方面旁路掉该器件的高频噪声。数字电路中典型的去耦电容为0.1uf的去耦电容有5nH分布电感，它的并行共振频率大约在7MHz左右，也就是说对于10MHz以下的噪声有较好的去耦作用，对40MHz以上的噪声几乎不起作用。</p>
+<p>1uf，10uf电容，并行共振频率在20MHz以上，去除高频率噪声的效果要好一些。在电源进入印刷板的地方和一个1uf或10uf的去高频电容往往是有利的，即使是用电池供电的系统也需要这种电容。</p>
+<p>每10片左右的集成电路要加一片充放电电容，或称为蓄放电容，电容大小可选10uf。最好不用电解电容，电解电容是两层溥膜卷起来的，这种卷起来的结构在高频时表现为电感，最好使用胆电容或聚碳酸酝电容。</p>
+<p>去耦电容值的选取并不严格，可按C=1/f计算;即10MHz取0.1uf，对微控制器构成的系统，取0.1~0.01uf之间都可以。</p>
+<p>03</p>
+<p>降低噪声与电磁干扰的一些经验。</p>
+<p>(1) 能用低速芯片就不用高速的，高速芯片用在关键地方。</p>
+<p>(2) 可用串一个电阻的办法，降低控制电路上下沿跳变速率。</p>
+<p>(3) 尽量为继电器等提供某种形式的阻尼。</p>
+<p>(4) 使用满足系统要求的最低频率时钟。</p>
+<p>(5) 时钟产生器尽量*近到用该时钟的器件。石英晶体振荡器外壳要接地。</p>
+<p>(6) 用地线将时钟区圈起来，时钟线尽量短。</p>
+<p>(7)<br>I/O驱动电路尽量*近印刷板边，让其尽快离开印刷板。对进入印制板的信号要加滤波，从高噪声区来的信号也要加滤波，同时用串终端电阻的办法，减小信号反射。</p>
+<p>(8)<br>MCD无用端要接高，或接地，或定义成输出端，集成电路上该接电源地的端都要接，不要悬空。</p>
+<p>(9) 闲置不用的门电路输入端不要悬空，闲置不用的运放正输入端接地，负输入端接输出端。</p>
+<p>(10) 印制板尽量使用45折线而不用90折线布线以减小高频信号对外的发射与耦合。</p>
+<p>(11) 印制板按频率和电流开关特性分区，噪声元件与非噪声元件要距离再远一些。</p>
+<p>(12) 单面板和双面板用单点接电源和单点接地、电源线、地线尽量粗，经济是能承受的话用多层板以减小电源，地的容生电感。</p>
+<p>(13) 时钟、总线、片选信号要远离I/O线和接插件。</p>
+<p>(14) 模拟电压输入线、参考电压端要尽量远离数字电路信号线，特别是时钟。</p>
+<p>(15) 对A/D类器件，数字部分与模拟部分宁可统一下也不要交*。</p>
+<p>(16) 时钟线垂直于I/O线比平行I/O线干扰小，时钟元件引脚远离I/O电缆。</p>
+<p>(17) 元件引脚尽量短，去耦电容引脚尽量短。</p>
+<p>(18) 关键的线要尽量粗，并在两边加上保护地。高速线要短要直。</p>
+<p>(19) 对噪声敏感的线不要与大电流，高速开关线平行。</p>
+<p>(20) 石英晶体下面以及对噪声敏感的器件下面不要走线。</p>
+<p>(21) 弱信号电路，低频电路周围不要形成电流环路。</p>
+<p>(22) 任何信号都不要形成环路，如不可避免，让环路区尽量小。</p>
+<p>(23) 每个集成电路一个去耦电容。每个电解电容边上都要加一个小的高频旁路电容。</p>
+<p>(24) 用大容量的钽电容或聚酷电容而不用电解电容作电路充放电储能电容。使用管状电容时，外壳要接地。</p>
+
         </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong>PCB布线基本规范</a></li>
+            <li><strong>发布时间：</strong>2020-07-20</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
         
         
         
@@ -186,6 +301,20 @@
 </div>
 
 
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog-cn/5beb955a/%E4%BD%BF%E7%94%A8Simulink-Test%E8%BF%9B%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+                <span class="level-item">使用Simulink_Test进行单元测试</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
@@ -764,7 +893,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="关于" height="28">
+                    <img src="/images/og_image.png" alt="PCB布线基本规范" height="28">
                 
                 </a>
                 <p class="is-size-7">
