@@ -7,18 +7,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>DIYECU</title>
+<title>Idle-Speed-Control模块分析 - DIYECU</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="DIYECU">
-<meta property="og:url" content="http://yoursite.com/page/2/">
+    <meta name="description" content="目录  [TOC] Idle Speed Control模块分析模块输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Idle-Speed-Control模块分析">
+<meta property="og:url" content="http://yoursite.com/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/">
 <meta property="og:site_name" content="DIYECU">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:description" content="目录  [TOC] Idle Speed Control模块分析模块输入">
+<meta property="og:image" content="http://yoursite.com/images/blog-028.jpg">
+<meta property="article:published_time" content="2020-07-22T07:53:21.092Z">
+<meta property="article:modified_time" content="2020-07-22T07:53:21.100Z">
 <meta property="article:author" content="Leo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+<meta name="twitter:image" content="http://yoursite.com/images/blog-028.jpg">
 
 
 
@@ -76,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="DIYECU" height="28">
+                <img src="/images/og_image.png" alt="Idle-Speed-Control模块分析" height="28">
             
             </a>
         </div>
@@ -118,20 +121,19 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-    
 <div class="card">
     
     <div class="card-image">
-        <a href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-014.jpeg" alt="43-如何解锁已经锁定的simulink模块">
-        </a>
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/images/blog-028.jpg" alt="Idle-Speed-Control模块分析">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.078Z">2020-04-08</time>
+                <time class="level-item has-text-grey" datetime="2020-07-22T07:53:21.092Z">2020-07-22</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
@@ -141,7 +143,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 235 个字)
+                    3 分钟 读完 (大约 408 个字)
                 </span>
                 
                 
@@ -150,23 +152,102 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/">43-如何解锁已经锁定的simulink模块</a>
+                Idle-Speed-Control模块分析
             
         </h1>
         <div class="content">
-            <p>何解锁已经锁定的simulink模块</p>
-<p> 关于simulink建模会遇到的问题,相信大家都会有</p>
+            <blockquote>
+<p>目录</p>
+</blockquote>
+<p>[TOC]</p>
+<h1 id="Idle-Speed-Control模块分析"><a href="#Idle-Speed-Control模块分析" class="headerlink" title="Idle Speed Control模块分析"></a>Idle Speed Control模块分析</h1><h2 id="模块输入"><a href="#模块输入" class="headerlink" title="模块输入"></a>模块输入</h2><a id="more"></a>
+<p>输出</p>
+<h3 id="Idle-Speed-Control模块的输入输出"><a href="#Idle-Speed-Control模块的输入输出" class="headerlink" title="Idle Speed Control模块的输入输出"></a>Idle Speed Control模块的输入输出</h3><p>该模块有两个输入（TrqCmdIn 、 EngSpd）及一个输出（TrqCmd）</p>
+<p><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722102955358.png" alt></p>
+<p>其中TrqCmdIn为扭矩指令索引，EngSpd为发动机转速，TrqCmd为发动机需求扭矩指令</p>
+<h2 id="内部子模块"><a href="#内部子模块" class="headerlink" title="内部子模块"></a>内部子模块</h2><h3 id="Idle-Speed-Control模块内部子模块"><a href="#Idle-Speed-Control模块内部子模块" class="headerlink" title="Idle Speed Control模块内部子模块"></a>Idle Speed Control模块内部子模块</h3><p><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722103850385.png" alt></p>
+<h2 id="子模块介绍"><a href="#子模块介绍" class="headerlink" title="子模块介绍"></a>子模块介绍</h2><h3 id="Idle-Speed-Control子模块介绍"><a href="#Idle-Speed-Control子模块介绍" class="headerlink" title="Idle Speed Control子模块介绍"></a>Idle Speed Control子模块介绍</h3><h3 id="1、比较模块"><a href="#1、比较模块" class="headerlink" title="1、比较模块"></a>1、比较模块</h3><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722104908453.png" style="zoom:50%;">
+
+<p>输入TrqCmdIn与Trq_idlecmd_enable比较，输出为boolean类型，如果为真则激活下面的Idle Speed Control模块，</p>
+<img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722110820349.png" style="zoom: 80%;">
+
+<p>其中<code>const= 3</code> </p>
+<table>
+<thead>
+<tr>
+<th align="left">If</th>
+<th align="left">Idle Speed Controller</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>Trqcmd,input</em> &lt; <em>Trqidlecmd,enable</em></td>
+<td align="left">Enabled</td>
+</tr>
+<tr>
+<td align="left"><em>Trqidlecmd,enable</em> ≤ <em>Trqcmd,input</em></td>
+<td align="left">Not enabled</td>
+</tr>
+</tbody></table>
+<h3 id="2、取最大值模块"><a href="#2、取最大值模块" class="headerlink" title="2、取最大值模块"></a>2、取最大值模块</h3><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722112006073.png" style="zoom:50%;">
+
+<p>两个输入数据比较输出较大的数据</p>
+<h3 id="3、Idle-Speed-Control子模块"><a href="#3、Idle-Speed-Control子模块" class="headerlink" title="3、Idle Speed Control子模块"></a>3、Idle Speed Control子模块</h3><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722112404453.png" style="zoom: 50%;">
+
+<p>当指令扭矩低于阈值时，怠速控制器调节发动机转速。（N_idle = 750）</p>
+<p>怠速控制器使用离散PI控制器通过命令转矩来调节目标怠速。</p>
+<p>PI控制器使用以下传递函数：<img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722132640223.png" alt></p>
+<p>怠速指令扭矩必须小于最大指令扭矩：</p>
+<p><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722132744215.png" alt></p>
+<p>在这些条件下，怠速控制处于活动状态。如果命令输入扭矩下降到启用怠速控制器的阈值以下<img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722133102757.png" alt>则命令发动机扭矩由以下公式给出：</p>
+<p><img src="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200722133211543.png" alt></p>
+<p>方程使用这些变量：</p>
+<table>
+<thead>
+<tr>
+<th><em>Trqcmd</em></th>
+<th>Commanded engine torque</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>Trqcmd,input</em></td>
+<td>Input commanded engine torque</td>
+</tr>
+<tr>
+<td><em>Trqidlecmd,enable</em></td>
+<td>Threshold for enabling idle speed controller</td>
+</tr>
+<tr>
+<td><em>Trqidlecmd</em></td>
+<td>Idle speed controller commanded torque</td>
+</tr>
+<tr>
+<td><em>Trqidlecmd,max</em></td>
+<td>Maximum commanded torque</td>
+</tr>
+<tr>
+<td><em>Nidle</em></td>
+<td>Base idle speed</td>
+</tr>
+<tr>
+<td><em>Kp,idle</em></td>
+<td>Idle speed controller proportional gain</td>
+</tr>
+<tr>
+<td><em>Ki,idle</em></td>
+<td>Idle speed controller integral gain</td>
+</tr>
+</tbody></table>
+
         </div>
         
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong>Idle-Speed-Control模块分析</a></li>
+            <li><strong>发布时间：</strong>2020-07-22</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
         
         
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/2cda876d/43-%E5%A6%82%E4%BD%95%E8%A7%A3%E9%94%81%E5%B7%B2%E7%BB%8F%E9%94%81%E5%AE%9A%E7%9A%84simulink%E6%A8%A1%E5%9D%97/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
         
         
     </div>
@@ -174,591 +255,74 @@
 
 
 
-
-
-
-
-
-
-    
 <div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-013.jpeg" alt="36-获取参数名称和值命令get-param使用方法">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.066Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    13 分钟 读完 (大约 1920 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
             
-                <a class="has-link-black-ter" href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">36-获取参数名称和值命令get-param使用方法</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="et-param"><a href="#et-param" class="headerlink" title="et_param"></a>et_param</h1><p>获取参数名称和值</p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>[ParamVa</p>
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ialipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/iweixin.png" alt="微信"></div>
+</a>
+
+                
         </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/a4b7e55/36-%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E5%92%8C%E5%80%BC%E5%91%BD%E4%BB%A4get-param%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
     </div>
 </div>
 
 
 
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-012.jpeg" alt="28-从模型创建工程">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.058Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 分钟 读完 (大约 602 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">28-从模型创建工程</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="模型创建工程"><a href="#模型创建工程" class="headerlink" title="模型创建工程"></a>模型创建工程</h2><p>创建一个工程以组织您的模型和任何依存文件。使用 **</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/9fa1f654/28-%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-011.jpeg" alt="23-m脚本文件保护">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.050Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 136 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/">23-m脚本文件保护</a>
-            
-        </h1>
-        <div class="content">
-            <p>脚本文件保护</p>
-<p>一、在MATLAB命令窗口输入如下命令：</p>
-<p>&gt;&gt;pcode *.m</p>
-<p>生成\</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/910c13dd/23-m%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-009.jpeg" alt="19-改善Simulink模型布局">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.042Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 263 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/">19-改善Simulink模型布局</a>
-            
-        </h1>
-        <div class="content">
-            <p>善模型布局</p>
-<p>要改善图表的布局和外观，请在“ <strong>格式”</strong>选项卡中单击“ <strong>自动排列”</strong>。此</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/ff70442f/19-%E6%94%B9%E5%96%84Simulink%E6%A8%A1%E5%9E%8B%E5%B8%83%E5%B1%80/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/bee46678/17-%E5%88%9B%E5%BB%BAReference-Model/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-007.jpeg" alt="17-创建Reference-Model">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.030Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 116 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/bee46678/17-%E5%88%9B%E5%BB%BAReference-Model/">17-创建Reference-Model</a>
-            
-        </h1>
-        <div class="content">
-            <p>建Reference Model</p>
-<p>1、右键选择由subsystem转成reference mod</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/bee46678/17-%E5%88%9B%E5%BB%BAReference-Model/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/bbc36fda/16-%E5%88%9B%E5%BB%BA%E5%8F%97%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%9E%8B/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-006.jpeg" alt="16-创建受保护模型">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.026Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 768 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/bbc36fda/16-%E5%88%9B%E5%BB%BA%E5%8F%97%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%9E%8B/">16-创建受保护模型</a>
-            
-        </h1>
-        <div class="content">
-            <p><em>说明如何创建受保护模型，以进行只读模式的查看、仿真或代码生成。*</em></p>
-<ol>
-<li><p>打开您的模型。此示</p></li></ol>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/bbc36fda/16-%E5%88%9B%E5%BB%BA%E5%8F%97%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%9E%8B/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/210dcc39/15-%E5%9C%A8Simulink%E4%B8%AD%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84Library01/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-005.jpeg" alt="15-在Simulink中创建自己的Library01">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:32.018Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    5 分钟 读完 (大约 811 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/210dcc39/15-%E5%9C%A8Simulink%E4%B8%AD%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84Library01/">15-在Simulink中创建自己的Library01</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="库添加到-Library-Browser-中"><a href="#库添加到-Library-Browser-中" class="headerlink" title="库添加到 Library Browser 中"></a>库添加到 Library Browser 中</h2>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/210dcc39/15-%E5%9C%A8Simulink%E4%B8%AD%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84Library01/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/181b6a48/13-%E9%AB%98%E6%95%88%E4%BD%BF%E7%94%A8simulink/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-004.jpeg" alt="13-高效使用simulink">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:31.990Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    8 分钟 读完 (大约 1201 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/181b6a48/13-%E9%AB%98%E6%95%88%E4%BD%BF%E7%94%A8simulink/">13-高效使用simulink</a>
-            
-        </h1>
-        <div class="content">
-            <p><a href="media/6a3c5ec8cb279515acf4a5ddcf9883eb.png"></a></p>
-<p>1</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/181b6a48/13-%E9%AB%98%E6%95%88%E4%BD%BF%E7%94%A8simulink/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-003.jpeg" alt="11-Matlab-Simulink代码生成01">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:31.982Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    9 分钟 读完 (大约 1332 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/">11-Matlab-Simulink代码生成01</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="把手教你代码生成（上）：MATLAB代码生成"><a href="#把手教你代码生成（上）：MATLAB代码生成" class="headerlink" title="把手教你代码生成（上）：MATLAB代码生成"></a>把手教你代码生成（上）：MATLAB代码生成</h1>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/9434ba0b/11-Matlab-Simulink%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%9001/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/">上一页</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog-cn/a1fc874f/PCB%E5%B8%83%E7%BA%BF%E5%9F%BA%E6%9C%AC%E8%A7%84%E8%8C%83/">
+                <span class="level-item">PCB布线基本规范</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next">
-            <a class="is-flex-grow has-text-black-ter" href="/page/3/">下一页</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/">1</a></li>
-            
-            <li><a class="pagination-link is-current" href="/page/2/">2</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/page/3/">3</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
 </div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'UNAzhXrv3JomW84YwQoP0rPM-gzGzoHsz',
+        app_key: 'p4TeNM70w95O5YbrAsz381v7',
+        placeholder: 'Say something...'
+    });
+</script>
+
+    </div>
+</div>
+
 </div>
                 
 
@@ -1313,7 +877,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="DIYECU" height="28">
+                    <img src="/images/og_image.png" alt="Idle-Speed-Control模块分析" height="28">
                 
                 </a>
                 <p class="is-size-7">
