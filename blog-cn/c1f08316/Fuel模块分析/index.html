@@ -7,18 +7,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>分类: Simulink - DIYECU</title>
+<title>Fuel模块分析 - DIYECU</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="DIYECU">
-<meta property="og:url" content="http://yoursite.com/categories/Simulink/page/3/">
+    <meta name="description" content="目录  [TOC] Fuel模块分析为了启动燃烧，CI发动机将燃料直接喷入燃烧室。喷射后，燃料自燃，增加了气缸压力。所喷射燃料的总质量和主喷射正时决定了扭矩的产生。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fuel模块分析">
+<meta property="og:url" content="http://yoursite.com/blog-cn/c1f08316/Fuel%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/">
 <meta property="og:site_name" content="DIYECU">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="og:description" content="目录  [TOC] Fuel模块分析为了启动燃烧，CI发动机将燃料直接喷入燃烧室。喷射后，燃料自燃，增加了气缸压力。所喷射燃料的总质量和主喷射正时决定了扭矩的产生。">
+<meta property="og:image" content="http://yoursite.com/images/blog-029.jpg">
+<meta property="article:published_time" content="2020-07-23T03:21:35.953Z">
+<meta property="article:modified_time" content="2020-07-23T03:21:35.957Z">
 <meta property="article:author" content="Leo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+<meta name="twitter:image" content="http://yoursite.com/images/blog-029.jpg">
 
 
 
@@ -76,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/og_image.png" alt="DIYECU" height="28">
+                <img src="/images/og_image.png" alt="Fuel模块分析" height="28">
             
             </a>
         </div>
@@ -117,163 +120,178 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/images/blog-029.jpg" alt="Fuel模块分析">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-23T03:21:35.953Z">2020-07-22</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 443 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Fuel模块分析
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>目录</p>
+</blockquote>
+<p>[TOC]</p>
+<h1 id="Fuel模块分析"><a href="#Fuel模块分析" class="headerlink" title="Fuel模块分析"></a>Fuel模块分析</h1><p>为了启动燃烧，CI发动机将燃料直接喷入燃烧室。喷射后，燃料自燃，增加了气缸压力。所喷射燃料的总质量和主喷射正时决定了扭矩的产生。</p>
+<a id="more"></a>
+<h2 id="模块的输入输出"><a href="#模块的输入输出" class="headerlink" title="模块的输入输出"></a>模块的输入输出</h2><h3 id="Fuel模块输入输出"><a href="#Fuel模块输入输出" class="headerlink" title="Fuel模块输入输出"></a>Fuel模块输入输出</h3><p><img src="/blog-cn/c1f08316/Fuel%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200723092815481.png" alt></p>
+<p>两个输入（TrqCmd、EngSpd），三个输出（FuelMassTotCmd、FuelMainSoi、InjPw）</p>
+<p>其中TrqCmd为扭矩指令，EngSpd为发动机转速，FuelMassTotCmd为燃油总量指令，FuelMainSoi为燃油主喷提前角，InjPw为喷射脉宽。</p>
+<h2 id="内部子模块"><a href="#内部子模块" class="headerlink" title="内部子模块"></a>内部子模块</h2><h3 id="Fuel模块内部子模块"><a href="#Fuel模块内部子模块" class="headerlink" title="Fuel模块内部子模块"></a>Fuel模块内部子模块</h3><p><img src="/blog-cn/c1f08316/Fuel%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200723094451630.png" alt></p>
+<h4 id="1、Total-Fuel-Mass-mg-inj-模块"><a href="#1、Total-Fuel-Mass-mg-inj-模块" class="headerlink" title="1、Total Fuel Mass(mg/inj)模块"></a>1、Total Fuel Mass(mg/inj)模块</h4><p><img src="/blog-cn/c1f08316/Fuel%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200723094803791.png" alt></p>
+<p>每次喷射表的指令总燃料质量是扭矩指令和发动机转速的函数</p>
+<p>F<sub>cmd,tot</sub> = f<sub>Fcmd,tot</sub>(Trq<sub>cmd</sub>,N)</p>
+<p>其中F<sub>cmd,tot</sub>   <em>F</em>是每次喷射的总燃料质量，单位为mg /缸，Trq<sub>cmd</sub>是发动机扭矩指令，单位为 N·m，N 是发动机转速，单位为 rpm。</p>
+<h4 id="2、Fuel-SOI-degBTDC-模块"><a href="#2、Fuel-SOI-degBTDC-模块" class="headerlink" title="2、Fuel SOI(degBTDC)模块"></a>2、Fuel SOI(degBTDC)模块</h4><p><img src="/blog-cn/c1f08316/Fuel%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/image-20200723101509829.png" alt></p>
+<p>主喷射开始（SOI）提前角查找Map表是指令燃油质量和发动机转速的函数</p>
+<p><em>M<strong>A</strong>I<strong>N</strong>S<strong>O</strong>I</em>=<em>f</em>(F<sub>cmd,tot</sub>,<em>N</em>)</p>
+<p>其中</p>
+<ul>
+<li><em>MAINSOI</em>  是主喷提前角,在上止点后的曲轴转角 (degATDC).</li>
+<li>F<sub>cmd,tot</sub>  是燃油量，每次喷射的质量 (mg/inj)</li>
+<li><em>N</em>  是发动机转速(rpm)</li>
+</ul>
+<h4 id="3、喷射脉宽"><a href="#3、喷射脉宽" class="headerlink" title="3、喷射脉宽"></a>3、喷射脉宽</h4><p>假设燃油轨压力恒定，CI控制器根据总要求的燃料质量命令喷油器脉冲宽度：</p>
+<p>$$P_{winj }=  \cfrac{S_{inj}}{F_{cmd,tot}}$$</p>
+<p>公式中用到的变量</p>
+<table>
+<thead>
+<tr>
+<th>P<sub>winj</sub></th>
+<th>Fuel injector pulse-width</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$S_{inj}$</td>
+<td>Fuel injector slope</td>
+</tr>
+<tr>
+<td>$F_{cmd,tot}$</td>
+<td>Commanded total fuel mass per injection</td>
+</tr>
+<tr>
+<td><em>MAINSOI</em></td>
+<td>Main start-of-injection timing</td>
+</tr>
+<tr>
+<td><em>N</em></td>
+<td>Engine speed</td>
+</tr>
+</tbody></table>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong>Fuel模块分析</a></li>
+            <li><strong>发布时间：</strong>2020-07-22</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/categories">分类</a></li>
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
             
-            <li class="is-active"><a href="#" aria-current="page">Simulink</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ialipay.png" alt="支付宝"></div>
+</a>
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/d368811c/2-SIL-PIL-HIL/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-010.jpeg" alt="2-SIL-PIL-HIL">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:31.966Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
                 
                 
-                <span class="level-item has-text-grey">
-                    
-                    
-                    39 分钟 读完 (大约 5818 个字)
-                </span>
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/iweixin.png" alt="微信"></div>
+</a>
+
                 
-                
-            </div>
         </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/d368811c/2-SIL-PIL-HIL/">2-SIL-PIL-HIL</a>
-            
-        </h1>
-        <div class="content">
-            <p><em>SIL、PIL和HIL*</em></p>
-<h3 id="什么是SIL和PIL模拟？"><a href="#什么是SIL和PIL模拟？" class="headerlink" title="什么是SIL和PIL模拟？"></a>什么是SIL和PIL模拟？</h3><p>随着嵌入式编码®，您可以运行</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/d368811c/2-SIL-PIL-HIL/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
     </div>
 </div>
 
 
 
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog-cn/15144c0c/1-a2l%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90/" class="image is-7by1">
-            <img class="thumbnail" src="/images/blog-001.jpeg" alt="1-a2l文件生成">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-04-09T01:05:31.942Z">2020-04-08</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Simulink/">Simulink</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    37 分钟 读完 (大约 5501 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog-cn/15144c0c/1-a2l%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90/">1-a2l文件生成</a>
-            
-        </h1>
-        <div class="content">
-            <p><em>a2l文件生成*</em></p>
-<p>ASAM MCD-2<br>MC标准，也称为ASAP2，是由协会为自动化及测量系</p>
-        </div>
-        
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog-cn/15144c0c/1-a2l%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/Simulink/page/2/">上一页</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog-cn/8d8fe56a/Idle-Speed-Control%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/">
+                <span class="level-item">Idle-Speed-Control模块分析</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/Simulink/page/4/">下一页</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/Simulink/">1</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/Simulink/page/2/">2</a></li>
-            
-            <li><a class="pagination-link is-current" href="/categories/Simulink/page/3/">3</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
 </div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'UNAzhXrv3JomW84YwQoP0rPM-gzGzoHsz',
+        app_key: 'p4TeNM70w95O5YbrAsz381v7',
+        placeholder: 'Say something...'
+    });
+</script>
+
+    </div>
+</div>
+
 </div>
                 
 
@@ -828,7 +846,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/og_image.png" alt="DIYECU" height="28">
+                    <img src="/images/og_image.png" alt="Fuel模块分析" height="28">
                 
                 </a>
                 <p class="is-size-7">
