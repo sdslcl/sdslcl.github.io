@@ -1,0 +1,3158 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>CCP协议命令解析 - DIYECU</title>
+
+
+    <meta name="description" content="1 指令描述将解释所有带有参数的命令和预期的返回信息，包括每个命令的示例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CCP协议命令解析">
+<meta property="og:url" content="http://yoursite.com/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/">
+<meta property="og:site_name" content="DIYECU">
+<meta property="og:description" content="1 指令描述将解释所有带有参数的命令和预期的返回信息，包括每个命令的示例。">
+<meta property="og:image" content="http://yoursite.com/images/blog-032.jpg">
+<meta property="article:published_time" content="2020-08-07T08:18:43.677Z">
+<meta property="article:modified_time" content="2020-08-07T08:18:43.721Z">
+<meta property="article:author" content="Leo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/blog-032.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/southeast.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/og_image.png" alt="CCP协议命令解析" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="/images/blog-032.jpg" alt="CCP协议命令解析">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-08-07T08:18:43.677Z">2020-08-07</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/Protocol/">Protocol</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 小时 读完 (大约 7962 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                CCP协议命令解析
+            
+        </h1>
+        <div class="content">
+            <h1 id="1-指令描述"><a href="#1-指令描述" class="headerlink" title="1 指令描述"></a>1 指令描述</h1><p>将解释所有带有参数的命令和预期的返回信息，包括每个命令的示例。</p>
+<a id="more"></a>
+<h2 id="1-1-连接"><a href="#1-1-连接" class="headerlink" title="1.1 连接"></a>1.1 连接</h2><p>指令标签<strong>CONNECT</strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = CONNECT 0x01</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>word</td>
+<td>station address (Intel format)</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>此命令与所选从站建立与主从命令协议的连续逻辑点对点连接。以下所有协议命令仅指该站，直到选择另一个站.一个connect命令到另一个站临时断开活动站（请参见DISCONNECT）。确认已连接站的CONNECT命令。从站设备不响应任何命令，除非先前的CONNECT命令使用正确的站地址进行寻址。站地址指定为一个数字,小端字节顺序（英特尔格式，低字节优先）。</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备将发送一个CONNECT CRO到从设备，站地址为0x0200。命令计数器CTR当前为0x45：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/2018111711501723.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/2018111711501736.png" alt></p>
+<h2 id="1-2-交换站标识符"><a href="#1-2-交换站标识符" class="headerlink" title="1.2 交换站标识符"></a>1.2 交换站标识符</h2><p>指令标签<strong><em>EXCHANGE_ID</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = EXCHANGE_ID 0x17</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…</td>
+<td>bytes</td>
+<td>CCP主设备ID信息（可选和特定于实现）</td>
+</tr>
+</tbody></table>
+<p>CCP主站和从站交换ID以进行自动会话配置。这可能包括根据从站的返回ID（Plug’n’Play）自动分配数据采集设置文件。预计会有以下返回信息（返回的DTO的内容：）</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>包ID：0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>命令返回码</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>命令计数器= CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>从设备ID的长度，以字节为单位</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>从设备ID的数据类型限定符（可选和具体实施）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>byte</td>
+<td>资源可用性掩码</td>
+</tr>
+<tr>
+<td>6</td>
+<td>byte</td>
+<td>资源保护掩码</td>
+</tr>
+<tr>
+<td>7</td>
+<td>byte</td>
+<td>不在乎</td>
+</tr>
+</tbody></table>
+<p>从设备自动将内存传输地址0（MTA0）设置为CCP主设备随后可以使用UPLOAD上传所请求ID的位置。参见SET_MTA和UPLOAD命令描述。</p>
+<p>资源可用性掩码/资源保护状态掩码格式，简化如下，简称为资源掩码。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/2018111711501733.png" alt></p>
+<table>
+<thead>
+<tr>
+<th>CAL</th>
+<th>校准</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DAQ</td>
+<td>数据采集</td>
+</tr>
+<tr>
+<td>PGM</td>
+<td>内存编程</td>
+</tr>
+<tr>
+<td>x</td>
+<td>留作将来使用</td>
+</tr>
+</tbody></table>
+<p>资源可用性：如果bit = TRUE，则指定资源或功能可用。</p>
+<p>资源保护：如果bit = TRUE，则指定的资源或功能受到保护，以防止未经授权的访问（需要UNLOCK）。</p>
+<p>例</p>
+<p>主设备向从设备发送EXCHANGE_ID CRO。命令计数器CTR当前为0x23：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/2018111711501734.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，从ID的长度及其数据类型进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/2018111711501733.png" alt></p>
+<p>从ID的长度为4个字节，数据类型编码为类型2.资源可用性掩码为0x03，资源保护状态掩码为0x03。可以使用UPLOAD从从站获取数据。</p>
+<h2 id="1-3-获取钥匙的种子"><a href="#1-3-获取钥匙的种子" class="headerlink" title="1.3 获取钥匙的种子"></a>1.3 获取钥匙的种子</h2><p>指令标签<strong><em>GET_SEED</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = GET_SEED 0x12</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>请求的从机资源或功能（资源掩码）</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>有关资源掩码的说明，请参阅EXCHANGE_ID。</p>
+<p>使用一个GET_SEED命令只能请求一个资源或函数如果请求了多个资源，则必须多次执行GET_SEED命令和以下UNLOCK命令。</p>
+<p>返回种子和密钥算法的’种子’数据，用于计算’密钥’以解锁所请求的授权访问功能（请参阅下面的’解锁保护’）。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>保护状态（TRUE或FALSE）</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>‘种子’数据</td>
+</tr>
+</tbody></table>
+<p>如果保护状态= FALSE，则不需要UNLOCK来解锁所请求的功能。</p>
+<p>例</p>
+<p>主设备将GET_SEED CRO发送到从设备。命令计数器CTR当前为0x23。任务是数据采集：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017112.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，保护状态和“种子”数据进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017127.png" alt></p>
+<p>保护状态为TRUE（0x01），种子数据为0x14,0x15,0x16,0x17。</p>
+<h2 id="1-4-解锁保护"><a href="#1-4-解锁保护" class="headerlink" title="1.4 解锁保护"></a>1.4 解锁保护</h2><p>指令标签<strong><em>UNLOCK</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = UNLOCK 0x13</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>bytes</td>
+<td>‘key’</td>
+</tr>
+</tbody></table>
+<p>使用从’赛’计算的’密钥’解锁从设备安全保护（如果适用）。查看上面的种子和密钥。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>当前特权状态（资源掩码）</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>有关资源掩码的说明，请参阅EXCHANGE_ID。</p>
+<p>例</p>
+<p>主设备向从设备发送UNLOCK CRO。命令计数器CTR当前为0x23，使用GET_SEED找到的密钥：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017158.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR以及权限状态进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017167.png" alt></p>
+<p>权限状态为0x02，仅解锁数据获取。</p>
+<h2 id="1-5-设置内存传输地址"><a href="#1-5-设置内存传输地址" class="headerlink" title="1.5 设置内存传输地址"></a>1.5 设置内存传输地址</h2><p>指令标签<strong><em>SET_MTA</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = SET_MTA 0x02</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>内存传输地址MTA号（0,1）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>地址扩展</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>Unsigned long</td>
+<td>Address</td>
+</tr>
+</tbody></table>
+<p>此命令将初始化所有后续内存传输的基指针（32位+扩展）。地址扩展取决于从属控制器的组织，并可识别可切换的存储库或存储器段。</p>
+<p>MTA编号（句柄）用于标识不同的传输地址位置（指针）.MTA0由命令DNLOAD，UPLOAD，DNLOAD_6，SELECT_CAL_PAGE，CLEAR_MEMORY，PROGRAM和PROGRAM_6使用。 MOVE命令使用MTA1。参见命令’MOVE’。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送SET_MTA CRO。命令计数器CTR当前为0x23，MTA0编号为0，地址扩展名为0x02，基址为0x34002000：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017185.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017202.png" alt></p>
+<h2 id="1-6数据下载"><a href="#1-6数据下载" class="headerlink" title="1.6数据下载"></a>1.6数据下载</h2><p>指令标签<strong><em>DNLOAD</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = DNLOAD 0x03</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>要以字节为单位的数据块的大小</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>要传输的数据（最多5个字节）</td>
+</tr>
+</tbody></table>
+<p>CRO中包含的指定长度（大小）的数据块将从当前的存储器传输地址0（MTA0）开始复制到存储器中.MTA0指针将以’size’的值后递增。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>MTA0扩展（后增量后）</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>unsigned long</td>
+<td>MTA0地址（后增量后）</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送DOWNLOAD CRO。命令计数器CTR当前为0x23，数据大小为0x05，要传输的数据为0x10,0x11,0x12,0x13,0x14：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017219.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，内存传输地址扩展0x02和（递增的）当前MTA0进行应答</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017268.png" alt></p>
+<p>在执行此命令之前，MTA0已经是0x34002000并且增加了5。</p>
+<h2 id="1-7数据下载6个字节"><a href="#1-7数据下载6个字节" class="headerlink" title="1.7数据下载6个字节"></a>1.7数据下载6个字节</h2><p>指令标签<strong><em>DNLOAD_6</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = DNLOAD_6 0x23</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…7</td>
+<td>bytes</td>
+<td>要传输的6个字节的数据</td>
+</tr>
+</tbody></table>
+<p>CRO中包含固定长度（大小）为6个字节的数据块将从当前存储器传输地址0（MTA0）开始复制到存储器中.MTA0指针将后值递增6。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>MTA0扩展（后增量后）</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>unsigned long</td>
+<td>MTA0地址（后增量后）</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备将DNLOAD_6 CRO发送到从设备。命令计数器CTR当前为0x25，数据大小为0x05，要传输的数据为0x10,0x11,0x12,0x13,0x14,0x15：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017280.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，内存传输地址扩展0x02和（递增的）当前MTA0进行应答</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017294.png" alt></p>
+<p>在执行此命令之前，MTA0已经是0x34002000并且增加了6。</p>
+<h2 id="1-8数据上传"><a href="#1-8数据上传" class="headerlink" title="1.8数据上传"></a>1.8数据上传</h2><p>指令标签<strong><em>UPLOAD</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= UPLOAD 0x04</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>以字节为单位上载的数据块的大小</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>从当前MTA0开始的指定长度（大小）的数据块将被复制到相应的DTO数据字段中.MTA0指针将以’size’的值后递增。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>请求的数据字节</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送UPLOAD CRO。命令计数器CTR当前为0x23，数据大小为0x04：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017296.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR和请求的数据字节进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017314.png" alt></p>
+<p>DTO中未报告新的MTA0地址。</p>
+<h2 id="1-9短上传"><a href="#1-9短上传" class="headerlink" title="1.9短上传"></a>1.9短上传</h2><p>指令标签<strong><em>SHORT_UP</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= SHORT_UP 0x0F</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>要以字节为单位上传的数据块大小（1 … 5）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>Address extension</td>
+</tr>
+<tr>
+<td>4</td>
+<td>unsigned long</td>
+<td>Address</td>
+</tr>
+</tbody></table>
+<p>从源地址开始的指定长度（大小）的数据块将被复制到相应的DTO数据字段中.MTA0指针保持不变。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>请求的数据字节</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送SHORT UP CROP。命令计数器CTR当前为0x23，数据大小为0x04，源地址为0x12345678：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017339.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR和请求的数据字节进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017367.png" alt></p>
+<h2 id="1-10选择校准数据页面"><a href="#1-10选择校准数据页面" class="headerlink" title="1.10选择校准数据页面"></a>1.10选择校准数据页面</h2><p>指令标签<strong><em>SHORT_UP</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= SELECT_CAL_PAGE 0x11</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>该命令的功能取决于ECU的实现。先前初始化的MTA0指向校准数据页面的开始，该页面被该命令选为当前活动页面。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code = ACKNOWLEDGE 0x00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备首先将SET_MTA CRO和现在的SELECT_CAL_PAGE CRO发送到从设备。命令计数器CTR当前是0x23。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017404.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017390.png" alt></p>
+<p>使用两块ECU存储器进行校准，SET_MTA和SELECT_CAL_PAGE命令可用于来自主设备的一种“紧急中断”，以便通过准备这两者的变化使从系统进入“安全状态”。 使用SET_MTA命令的内存块，并使用SELECT_CAL_PAGE立即执行更改。</p>
+<h2 id="1-11获取DAQ列表的大小"><a href="#1-11获取DAQ列表的大小" class="headerlink" title="1.11获取DAQ列表的大小"></a>1.11获取DAQ列表的大小</h2><p>指令标签<strong><em>GET_DAQ_SIZE</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Command Code = GET_DAQ_SIZE 0x14</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>DAQ列表编号（0,1，…）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>don’t care</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>unsigned long</td>
+<td>专用于列表编号的CAN标识符</td>
+</tr>
+</tbody></table>
+<p>返回指定DAQ列表的大小作为可用的Object DescriptorTables（ODT）的数量并清除当前列表。如果指定的列表号不可用，则应返回size = 0。初始化DAQ列表并通过此列表获取数据 停了</p>
+<p>可以将单个CAN标识符分配给DAQ列表以配置多ECU数据采集。此功能是可选的。如果无法给定标识符，则返回错误代码.29位CAN标识符由最高有效位集标记。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>DAQ列表大小（=此列表中的ODT数）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>DAQ列表的第一个PID</td>
+</tr>
+<tr>
+<td>5…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>DAQ列表的特定ODT的PID由以下因素确定：</p>
+<p><strong>PID = DAQlist的第一个PID + ODT号</strong></p>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送GET_DAQ_SIZE CRO。命令计数器CTR当前为0x23，DAQ列表号为0x03，ID为0x01020304。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017406.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，第一个PID = 0x08和列表大小0x10（每个最多7个元素的10个ODT）来应答</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017430.png" alt></p>
+<h2 id="1-12设置DAQ列表指针"><a href="#1-12设置DAQ列表指针" class="headerlink" title="1.12设置DAQ列表指针"></a>1.12设置DAQ列表指针</h2><p>指令标签<strong><em>SET_DAQ_PTR</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= SET_DAQ_PTR 0x15</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>DAQ列表编号（0,1，…）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>对象描述符表ODT编号（0,1，…）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>ODT中的元素编号（0,1，…）</td>
+</tr>
+<tr>
+<td>5…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>初始化DAQ列表指针，以便后续写入DAQ列表。</p>
+<p>另请参阅“数据采集消息的组织”。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送SET_DAQ_PTR CRO。命令计数器CTR当前为0x23，DAQ列表编号为0x03，ODT编号为0x05，寻址的元素编号为0x02。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017460.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017460.png" alt></p>
+<p>接下来，命令WRITE_DAQ用于设置所选ODT中的数据元素。</p>
+<h2 id="1-13写入DAQ列表条目"><a href="#1-13写入DAQ列表条目" class="headerlink" title="1.13写入DAQ列表条目"></a>1.13写入DAQ列表条目</h2><p>指令标签<strong><em>WRITE_DAQ</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= WRITE_DAQ 0x16</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>DAQ元素的大小，以字节为单位{1,2,4}</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>DAQ元素的地址扩展</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>DAQ元素的地址</td>
+</tr>
+</tbody></table>
+<p>将一个条目（单个DAQ元素的描述）写入由DAQ列表指针定义的DAQ列表（请参阅SET_DAQ_PTR）。定义了以下DAQ元素大小：1个字节，2个字节（类型字），4个字节（类型long / Float））。</p>
+<p>ECU可能不支持每个元素的单独地址扩展以及2或4字节元素大小。主设备负责关注ECU限制。可以在从设备描述文件（例如ASAP2）中定义限制。</p>
+<p>从设备的责任是DAQ元素的所有字节在传输时是一致的。</p>
+<p>另请参阅“数据采集消息的组织”。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送WRITE_DAQ CRO。命令计数器CTR当前为0x23，DAQ元素的大小为0x02字节，地址扩展为0x01，32位地址为0x02004200。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017491.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017496.png" alt></p>
+<h2 id="1-14启动-停止数据传输"><a href="#1-14启动-停止数据传输" class="headerlink" title="1.14启动/停止数据传输"></a>1.14启动/停止数据传输</h2><p>指令标签<strong><em>START_STOP</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= START_STOP 0x06</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>模式：启动/停止/准备数据传输</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>DAQ清单编号</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>最后的ODT号码</td>
+</tr>
+<tr>
+<td>5</td>
+<td>byte</td>
+<td>活动频道号</td>
+</tr>
+<tr>
+<td>6,7</td>
+<td>word</td>
+<td>传输速率预分频器</td>
+</tr>
+</tbody></table>
+<p>此命令用于启动或停止数据采集或准备指定DAQ列表的同步启动。最后ODT编号指定应传输此DAQ列表的哪些ODT（从0到最后ODT编号）。事件通道 No.指定有效确定数据传输时序的通用信号源。为了降低所需的传输速率，可以将预分频器应用于事件通道。预分频器值因子必须大于或等于1。</p>
+<p>mode参数定义如下：0x00停止指定的DAQ列表，0x01启动指定的DAQ列表，0x02为同步启动准备DAQ列表。</p>
+<p>启动/停止模式参数= 0x02（准备开始数据传输）使用提供的参数配置DAQ列表，但不启动指定列表的数据采集。此参数用于所有已配置的DAQ列表的同步启动。 在从属设备不能执行数据获取的同步开始的情况下，如果该参数为真（非零），则从设备可以开始数据传输。</p>
+<p>可以在从设备描述（ASAP2）中描述事件信道和DAQ列表的ECU特定属性。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送START_STOP CRO。命令计数器CTR当前为0x23，开始/停止字节为0x01（开始），DAQ列表编号为0x03，要发送的包编号为0x07 .ECU shell使用 事件通道0x02，预分频器为1（motorola-format）。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017500.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017527.png" alt></p>
+<h2 id="1-15断开连接"><a href="#1-15断开连接" class="headerlink" title="1.15断开连接"></a>1.15断开连接</h2><p>指令标签<strong><em>DISCONNECT</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= DISCONNECT 0x07</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>0x00临时，0x01会话结束</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>don’t care</td>
+</tr>
+<tr>
+<td>4,5</td>
+<td>word</td>
+<td>站地址（英特尔格式）</td>
+</tr>
+<tr>
+<td>6…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>断开从设备的连接。断开连接可以是临时的，将从设备设置为“离线”状态或使用参数0x01终止校准会话。</p>
+<p>终止会话会使所有状态信息无效并重置从属保护状态。</p>
+<p>临时断开连接不会停止DAQ消息的传输.MTA值，DAQ设置，会话状态和保护状态不受临时断开连接的影响并保持不变。</p>
+<p>如果ECU支持恢复功能并且使用SET_SESSION_STATUS命令设置恢复位，则DAQ相关功能的行为与临时断开连接一样.DAQ的保护状态保持解锁状态。</p>
+<p>站地址被指定为小端字节顺序的数字（英特尔格式，低字节优先）。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送DISCONNECT CRO。命令计数器CTR当前为0x23，参数字节为0x00（临时），从设备地址为0x0208。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017557.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017587.png" alt></p>
+<h2 id="1-16设置会话状态"><a href="#1-16设置会话状态" class="headerlink" title="1.16设置会话状态"></a>1.16设置会话状态</h2><p>指令标签<strong><em>SET_S_STATUS</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= SET_S_STATUS 0x0C</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>会话状态位（见下表）</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>byte</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>让从节点随时了解校准会话的当前状态（另见“错误处理”一章）。</p>
+<p>会话状态：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017591.png" alt></p>
+<table>
+<thead>
+<tr>
+<th>Bit0</th>
+<th>CAL</th>
+<th>校准数据已初始化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bit1</td>
+<td>DAQ</td>
+<td>DAQ列表已初始化</td>
+</tr>
+<tr>
+<td>Bit2</td>
+<td>RESUME</td>
+<td>请求在ECU关闭期间保存DAQ设置。启动后ECU自动重启DAQ。</td>
+</tr>
+<tr>
+<td>Bit6</td>
+<td>STORE</td>
+<td>请求在ECU关闭期间保存校准数据</td>
+</tr>
+<tr>
+<td>Bit7</td>
+<td>RUN</td>
+<td>会话进行中</td>
+</tr>
+<tr>
+<td>Bit3…5</td>
+<td>res</td>
+<td>保留</td>
+</tr>
+</tbody></table>
+<p>如果表达式为TRUE，则设置位（1）。</p>
+<p>会话状态位对从设备进行读/写，并在上电，会话注销和适用的故障条件下清除。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送SET_S_STATUS CRO。命令计数器CTR当前为0x23，会话状态位为10000001（RUN，CAL）。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017619.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017629.png" alt></p>
+<h2 id="1-17获取会话状态"><a href="#1-17获取会话状态" class="headerlink" title="1.17获取会话状态"></a>1.17获取会话状态</h2><p>指令标签<strong><em>GET_S_STATUS</em></strong> </p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= GET_S_STATUS 0x0D</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>会话状态</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>附加状态信息限定符</td>
+</tr>
+<tr>
+<td>5</td>
+<td>bytes</td>
+<td>其他状态信息（可选）</td>
+</tr>
+</tbody></table>
+<p>注意：使用其他状态信息是制造商和/或项目特定的，它不是此协议规范的一部分。例如，其他状态信息可能包含增量校验和结果，用于跟踪当前会话活动。如果返回 如果信息不包含附加状态信息，则附加状态信息限定符必须为FALSE（0）。如果附加状态信息不为FALSE，则可以使用它来确定附加状态信息的类型。</p>
+<p>例</p>
+<p>主设备向从设备发送GET_S_STATUS CRO。命令计数器CTR当前为0x23。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017647.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR和会话状态位进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017646.png" alt></p>
+<p>会话状态为第0位设置（CAL）和第7位设置（RUN）。</p>
+<h2 id="1-18建立校验和"><a href="#1-18建立校验和" class="headerlink" title="1.18建立校验和"></a>1.18建立校验和</h2><p>指令标签<strong><em>BUILD_CHKSUM</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= BUILD_CHKSUM 0x0E</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…5</td>
+<td>unsigned long</td>
+<td>块大小，以字节为单位</td>
+</tr>
+<tr>
+<td>6,7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>返回由MTA0（内存传输区起始地址）和块大小定义的内存块的校验和结果。校验和算法可能是制造商和/或项目特定的，它不是本规范的一部分。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>校验和数据的大小</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>校验和数据（具体实施）</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送BUILD_CHKSUM CRO。命令计数器CTR当前为0x23，块大小为32千字节（0x8000）。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017702.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR和计算的校验和0x1234进行应答。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017710.png" alt></p>
+<h2 id="1-19清除内存"><a href="#1-19清除内存" class="headerlink" title="1.19清除内存"></a>1.19清除内存</h2><p>指令标签<strong><em>CLEAR_MEMORY</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= CLEAR_MEMORY 0x10</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…5</td>
+<td>long</td>
+<td>内存大小</td>
+</tr>
+<tr>
+<td>6,7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>该命令可用于在重新编程之前擦除FLASH EPROM .MTA0指针指向要擦除的存储器位置。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送CLEAR MEMORY CRO。命令计数器CTR当前为0x23，块大小为32千字节（0x8000）。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017719.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017776.png" alt></p>
+<h2 id="1-20编程"><a href="#1-20编程" class="headerlink" title="1.20编程"></a>1.20编程</h2><p>指令标签<strong><em>PROGRAM</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= PROGRAM 0x18</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>要遵循的数据块大小（字节）</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>要编程的数据（最多5个字节）</td>
+</tr>
+</tbody></table>
+<p>CRO中包含的指定长度（大小）的数据块将被编程到非易失性存储器（FLASH，EEPROM）中，从当前MTA0开始.MTA0指针将以’size’的值后递增。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>MTA0扩展（后增量后）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>unsigned long</td>
+<td>MTA0地址（后增量后）</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送PROGRAM命令。命令计数器CTR当前为0x23，大小为3字节（0x03），要编程的数据为0x10,0x11,0x12：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017789.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO和CRO的CTR，内存传输地址扩展0x02和（递增的）当前MTA0进行应答</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017797.png" alt></p>
+<p>在执行此命令之前，MTA0已经是0x34002000并且增加了3。</p>
+<h2 id="1-21编程6字节"><a href="#1-21编程6字节" class="headerlink" title="1.21编程6字节"></a>1.21编程6字节</h2><p>指令标签<strong><em>PROGRAM_6</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= PROGRAM_6 0x22</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…7</td>
+<td>byte</td>
+<td>要编程的数据（6个字节）</td>
+</tr>
+</tbody></table>
+<p>CRO中包含的长度（大小）为6字节的数据块将被编程到非易失性存储器（FLASH，EEPROM）中，从当前MTA0开始。MTA0指针将后递增6。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>MTA0扩展（后增量后）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>unsigned long</td>
+<td>MTA0地址（后增量后）</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送PROGRAM命令。命令计数器CTR当前为0x23，大小为6字节，要编程的数据为0x10,0x11,0x12,0x13,0x14,0x15：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017814.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO和CRO的CTR，内存传输地址扩展0x02和（递增的）当前MTA0进行应答</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017818.png" alt></p>
+<p>在执行此命令之前，MTA0已经是0x34002000并且增加了6。</p>
+<h2 id="1-22移动内存块"><a href="#1-22移动内存块" class="headerlink" title="1.22移动内存块"></a>1.22移动内存块</h2><p>指令标签<strong><em>MOVE</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= MOVE 0x19</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…5</td>
+<td>long</td>
+<td>要移动的数据块的大小（字节数）</td>
+</tr>
+<tr>
+<td>6,7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>指定长度（大小）的数据块将从MTA 0（源指针）定义的地址复制到MTA 1（目标指针）定义的地址。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送MOVE CRO。命令计数器CT当前为0x23，要移动的字节数为32千字节（0x8000）。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017892.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）和CRO的CTR的DTO进行应答：</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017902.png" alt></p>
+<h2 id="1-23诊断服务"><a href="#1-23诊断服务" class="headerlink" title="1.23诊断服务"></a>1.23诊断服务</h2><p>指令标签<strong><em>DIAG_SERVICE</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= DIAG_SERVICE 0x20</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2,3</td>
+<td>word</td>
+<td>诊断服务号</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>参数，如果适用</td>
+</tr>
+</tbody></table>
+<p>从设备执行所请求的服务并自动将存储器传送地址MTA0设置到CCP主设备（主机）可以随后上载所请求的诊断服务返回信息的位置。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>bytes</td>
+<td>返回信息的长度，以字节为单位</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>返回信息的数据类型限定符（待定义）</td>
+</tr>
+<tr>
+<td>5…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送DIAG_SERVICE CRO。命令计数器CTR当前为0x23，请求的诊断服务号为0x08且没有参数。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115018131.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，返回信息的长度0x20和数据类型0x00来应答。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017915.png" alt></p>
+<p>现在可以从MTA0上载诊断服务数据。 见上传。</p>
+<h2 id="1-24行动服务"><a href="#1-24行动服务" class="headerlink" title="1.24行动服务"></a>1.24行动服务</h2><p>指令标签<strong><em>ACTION_SERVICE</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= ACTION_SERVICE 0x21</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2,3</td>
+<td>word</td>
+<td>行动服务号</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>参数，如果适用</td>
+</tr>
+</tbody></table>
+<p>从设备执行所请求的服务并自动将存储器传送地址MTA0设置到CCP主设备随后可以上载所请求的动作服务返回信息（如果适用）的位置。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>bytes</td>
+<td>返回信息的长度，以字节为单位</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>返回信息的数据类型限定符（待定义）</td>
+</tr>
+<tr>
+<td>5…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>例</p>
+<p>主设备向从设备发送ACTION SERVICE CRO。命令计数器CTR当前为0x23，请求的动作服务号为0x08并且具有参数0x05。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017912.png" alt></p>
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO，CRO的CTR，返回信息的长度0x20和数据类型0x00来应答。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/20181117115017937.png" alt></p>
+<p>现在可以从MTA0上载生成的操作服务数据。请参阅上传。</p>
+<h2 id="1-25测试可用性"><a href="#1-25测试可用性" class="headerlink" title="1.25测试可用性"></a>1.25测试可用性</h2><p>指令标签<strong><em>TEST</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= TEST 0x05</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2,3</td>
+<td>word</td>
+<td>站地址（英特尔格式）</td>
+</tr>
+<tr>
+<td>4…</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>此命令用于测试具有指定站地址的从站是否可用于CCP通信。此命令不会建立逻辑连接，也不会触发指定slave中的任何活动.Station地址被指定为小端数字 字节顺序（英特尔格式，低字节优先）。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code = ACK 0x00</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<h2 id="1-26启动-停止同步数据传输"><a href="#1-26启动-停止同步数据传输" class="headerlink" title="1.26启动/停止同步数据传输"></a>1.26启动/停止同步数据传输</h2><p>指令标签<strong><em>START_STOP_ALL</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= TEST 0x05</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>word</td>
+<td>站地址（英特尔格式）</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>此命令用于以同步方式开始定期传输使用先前发送的START_STOP命令（启动/停止模式= 2）配置的所有DAQ列表作为“准备启动”。该命令用于停止所有的定期传输 DAQ列表，包括那些未开始同步的列表。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<h2 id="1-27获取当前有效的校准页面"><a href="#1-27获取当前有效的校准页面" class="headerlink" title="1.27获取当前有效的校准页面"></a>1.27获取当前有效的校准页面</h2><p>指令标签<strong><em>GET_ACTIVE_CAL_PAGE</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= GET_ACTIVE_CAL_PAGE 0x09</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>此命令返回从站设备中当前处于活动状态的校准页面的起始地址。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>地址扩展</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>unsigned long</td>
+<td>地址</td>
+</tr>
+</tbody></table>
+<h2 id="1-28获得实施的CCP版本"><a href="#1-28获得实施的CCP版本" class="headerlink" title="1.28获得实施的CCP版本"></a>1.28获得实施的CCP版本</h2><p>指令标签<strong><em>GET_CCP_VERSION</em></strong></p>
+<p>CRO中的数据结构</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>命令代码= GET_CCP_VERSION 0x1B</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>主协议版本（所需）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>版本内发布（所需）</td>
+</tr>
+<tr>
+<td>4…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>此命令执行主设备和从设备中使用的协议版本的共同标识，以便在公共协议版本上进行协商。此命令应在EXCHANGE_ID命令之前执行。</p>
+<p>预计会有以下返回信息（返回DTO的内容:)</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>byte</td>
+<td>Packet ID: 0xFF</td>
+</tr>
+<tr>
+<td>1</td>
+<td>byte</td>
+<td>Command Return Code</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte</td>
+<td>Command Counter = CTR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>byte</td>
+<td>已实施主协议版本</td>
+</tr>
+<tr>
+<td>4</td>
+<td>byte</td>
+<td>在已实施的版本内发布</td>
+</tr>
+<tr>
+<td>5…7</td>
+<td>bytes</td>
+<td>don’t care</td>
+</tr>
+</tbody></table>
+<p>E x a m p l e</p>
+<p>主设备向从设备发送GET_CCP_VERSION命令。命令计数器CTR当前是0x27，期望的主协议版本是2，主版本2中的版本是1，即期望的协议版本是CCP 2.1。</p>
+<img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/image-20200729072812039.png">
+
+<p>从设备使用包含ACKNOWLEDGE（0x00）的DTO进行应答，CRO的CTR，从设备中实现的CCP版本再次为CCP 2.1。</p>
+<p><img src="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/201811171150183.png" alt></p>
+
+        </div>
+        
+            <ul class="post-copyright">
+            <li><strong>本文标题：</strong>CCP协议命令解析</a></li>
+            <li><strong>发布时间：</strong>2020-08-07</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+            </li>
+            </ul>
+        
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/ialipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/iweixin.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog-cn/1c55fefa/BUCK%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/">
+                <span class="level-item">BUCK电路参数计算及仿真</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'UNAzhXrv3JomW84YwQoP0rPM-gzGzoHsz',
+        app_key: 'p4TeNM70w95O5YbrAsz381v7',
+        placeholder: 'Say something...'
+    });
+</script>
+
+    </div>
+</div>
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="/images/avatar.png" alt="DIYECU BLOG">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        DIYECU BLOG
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        何时再遇见
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>银河系外太空</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            34
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            3
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            1
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://gitasd.com/sdslc" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://giuadt.com/ppoffice" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">PPOffice</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">giuadt.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/HardWare/">
+            <span class="level-start">
+                <span class="level-item">HardWare</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Protocol/">
+            <span class="level-start">
+                <span class="level-item">Protocol</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Simulink/">
+            <span class="level-start">
+                <span class="level-item">Simulink</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">22</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/Encrypted/" style="font-size: 10px;">Encrypted</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-032.jpg" alt="CCP协议命令解析">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:18:43.677Z">2020-08-07</time></div>
+                    <a href="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CCP协议命令解析</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Protocol/">Protocol</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/1c55fefa/BUCK%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-033.jpg" alt="BUCK电路参数计算及仿真">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:18:43.673Z">2020-08-07</time></div>
+                    <a href="/blog-cn/1c55fefa/BUCK%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">BUCK电路参数计算及仿真</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/c7db1f36/BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-035.jpg" alt="BOOST电路参数计算及仿真">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:18:43.661Z">2020-08-07</time></div>
+                    <a href="/blog-cn/c7db1f36/BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">BOOST电路参数计算及仿真</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/8edb6209/BUCK-BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-034.jpg" alt="BUCK-BOOST电路参数计算及仿真">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:15:05.517Z">2020-08-07</time></div>
+                    <a href="/blog-cn/8edb6209/BUCK-BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">BUCK-BOOST电路参数计算及仿真</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/3715f083/USB%E5%BC%95%E8%84%9A%E5%9B%BE%E4%B8%8E%E5%BC%95%E8%84%9A%E5%AE%9A%E4%B9%89/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-030.jpg" alt="USB引脚图与引脚定义">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:08:09.451Z">2020-08-07</time></div>
+                    <a href="/blog-cn/3715f083/USB%E5%BC%95%E8%84%9A%E5%9B%BE%E4%B8%8E%E5%BC%95%E8%84%9A%E5%AE%9A%E4%B9%89/" class="title has-link-black-ter is-size-6 has-text-weight-normal">USB引脚图与引脚定义</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">16</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Encrypted/">
+                        <span class="tag">Encrypted</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-032.jpg" alt="CCP协议命令解析">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:18:43.677Z">2020-08-07</time></div>
+                    <a href="/blog-cn/4bb8079c/CCP%E5%8D%8F%E8%AE%AE%E5%91%BD%E4%BB%A4%E8%A7%A3%E6%9E%90/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CCP协议命令解析</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Protocol/">Protocol</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/1c55fefa/BUCK%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-033.jpg" alt="BUCK电路参数计算及仿真">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:18:43.673Z">2020-08-07</time></div>
+                    <a href="/blog-cn/1c55fefa/BUCK%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">BUCK电路参数计算及仿真</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/c7db1f36/BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-035.jpg" alt="BOOST电路参数计算及仿真">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:18:43.661Z">2020-08-07</time></div>
+                    <a href="/blog-cn/c7db1f36/BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">BOOST电路参数计算及仿真</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/8edb6209/BUCK-BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-034.jpg" alt="BUCK-BOOST电路参数计算及仿真">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:15:05.517Z">2020-08-07</time></div>
+                    <a href="/blog-cn/8edb6209/BUCK-BOOST%E7%94%B5%E8%B7%AF%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97%E5%8F%8A%E4%BB%BF%E7%9C%9F/" class="title has-link-black-ter is-size-6 has-text-weight-normal">BUCK-BOOST电路参数计算及仿真</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog-cn/3715f083/USB%E5%BC%95%E8%84%9A%E5%9B%BE%E4%B8%8E%E5%BC%95%E8%84%9A%E5%AE%9A%E4%B9%89/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/blog-030.jpg" alt="USB引脚图与引脚定义">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-08-07T08:08:09.451Z">2020-08-07</time></div>
+                    <a href="/blog-cn/3715f083/USB%E5%BC%95%E8%84%9A%E5%9B%BE%E4%B8%8E%E5%BC%95%E8%84%9A%E5%AE%9A%E4%B9%89/" class="title has-link-black-ter is-size-6 has-text-weight-normal">USB引脚图与引脚定义</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/HardWare/">HardWare</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">16</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Encrypted/">
+                        <span class="tag">Encrypted</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/og_image.png" alt="CCP协议命令解析" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Leo&nbsp;
+                Powered &#10084; DIYECU
+                </p>
+            </div>
+            
+            <script>
+                (function(){
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if (curProtocol === 'https') {
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    }
+                    else {
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>      
+            
+            <div align="center">
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <script>
+                    var now = new Date(); 
+                    function createtime() { 
+                        var grt= new Date("11/10/2019 12:49:00");//此处修改你的建站时间或者网站上线时间 
+                        now.setTime(now.getTime()+250); 
+                        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+                        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+                    } 
+                    setInterval("createtime()",250);
+                </script>
+                <div align="center">
+                <span id="busuanzi_container_site_pv" class="theme-info">本站总访问量- 
+                    <span id="busuanzi_value_site_pv"></span> -次
+                </span>
+                <span id="busuanzi_container_site_uv" class="theme-info">您是第- 
+                    <span id="busuanzi_value_site_uv" + 2000>
+                    </span> -位小伙伴
+                </span>
+                <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            </div>
+            </div>
+            
+            <span>
+            </span>
+            
+
+            <script>
+                (function(){
+                    var bp = document.createElement('script');
+                    bp.src = '//push.zhanzhang.baidu.com/push.js';
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+            </script>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<!--�仨����Ч-->
+    <script src="https://cdn.jsdelivr.net/gh/wallleap/cdn@latest/js/sakura.js00"></script>
+    
+    <!--�����Ч��-->
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+   <script src="/js/tctip-1.0.3.min.js"></script>
+   <script>
+   new tctip({
+       top: '20%',
+       button: {
+         id: Math.ceil(Math.random()*8) + 1, 
+         type: 'dashang',
+       },
+       list: [
+         {
+           type: 'alipay',
+           qrImg: '/images/ialipay9.png'
+         }, {
+           type: 'wechat',
+           qrImg: '/images/iweixin9.png'
+         },
+       ]
+     }).init()
+   </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":0.5,"opacityOnHover":0.2}});</script></body>
+</html>
